@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>In the Trueshot Lodge</title>
+	<link rel="stylesheet" href="./CSS/style.css">
+	<link rel="stylesheet" href="./CSS/catalogue.css">
+	<link rel="icon" href="./Images/Icone.png" />
+</head>
+
+<body>
+	<header class="header">
+		<div class="header-top">
+			<div class="logo">
+				<img src="./Images/Logo.PNG" alt="Logo" height="250">
+			</div>
+			<div class="header-controls">
+				<button id="bg-toggle" class="bg-toggle" aria-label="Change the background">
+					<img src="./Images/Daynight.png" alt="Change the background">
+				</button>
+			</div>
+		</div>
+		<nav class="menu">
+			<ul>
+				<li><a href="accueil.html">Home</a></li>
+				<li><a href="presentation.html">Presentation</a></li>
+				<li><a href="catalogue.html">Card Library</a></li>
+				<li><a href="extensions.html">Expansions</a></li>
+			</ul>
+		</nav>
+	</header>
+	<div class="search-container">
+		<input type="text" id="search-bar" placeholder="Search"
+			onkeyup="filterCards(this.value.toLowerCase())">
+		<div class="filter-container">
+			<div class="filter-buttons">
+				<div class="dropdown" id="category-dropdown-wrap">
+					<button class="dropdown-btn" id="category-btn">Card Category</button>
+					<div class="dropdown-content" id="category-dropdown">
+						<a href="#" data-category="tous">All Cards</a>
+						<a href="#" data-category="familiers">Pets</a>
+						<a href="#" data-category="armes">Weapons</a>
+						<a href="#" data-category="sorts">Spells</a>
+					</div>
+				</div>
+				<div class="dropdown" id="type-dropdown-wrap">
+					<button class="dropdown-btn" id="type-btn">Pet Type</button>
+					<div class="dropdown-content" id="type-dropdown">
+						<a href="#" data-type="tous">All Types</a>
+						<a href="#" data-type="feroce">Ferocious</a>
+						<a href="#" data-type="ruse">Cunning</a>
+						<a href="#" data-type="tenace">Tenacious</a>
+					</div>
+				</div>
+				<div class="dropdown" id="rarity-dropdown-wrap">
+					<button class="dropdown-btn" id="rarity-btn">Pet Rarity</button>
+					<div class="dropdown-content" id="rarity-dropdown">
+						<a href="#" data-rarity="tous">All Rarities</a>
+						<a href="#" data-rarity="commune">Common</a>
+						<a href="#" data-rarity="exotique">Exotic</a>
+					</div>
+				</div>
+			</div>
+			<div class="filter-sliders">
+				<div class="attack-filter">
+					<label for="attack-min">Attack</label>
+					<div class="double-range">
+						<input type="range" id="attack-min" min="1" max="6" value="1" step="1" aria-label="Attack min">
+						<input type="range" id="attack-max" min="1" max="6" value="6" step="1" aria-label="Attack max">
+					</div>
+					<div class="range-values"><span id="attack-min-val">1</span> — <span id="attack-max-val">6</span></div>
+				</div>
+				<div class="life-filter">
+					<label for="life-min">Health / Cost</label>
+					<div class="double-range">
+						<input type="range" id="life-min" min="1" max="6" value="1" step="1" aria-label="Health min">
+						<input type="range" id="life-max" min="1" max="6" value="6" step="1" aria-label="Health max">
+					</div>
+					<div class="range-values"><span id="life-min-val">1</span> — <span id="life-max-val">6</span></div>
+				</div>
+			</div>
+		</div>
+		<p id="search-results">cards found with the search filters</p>
+	</div>
+	<hr class="subtitle-bar">
+	<h1 id="familiers-title" class="catalogue-h1">Pets available</h1>
+	<div class="catalogue" id="familiers-catalogue">
+		<img src="./Images/Cartes/Core/Pets/Exotic pets/Aqiri.png" alt="Aqiri"
+			class="catalogue-card" data-type="ruse" data-rarity="exotique" data-attack="3" data-life="4">
+		<img src="./Images/Cartes/Core/Pets/Common pets/Basilisk.png" alt="Basilisk"
+			class="catalogue-card" data-type="ruse" data-rarity="commune" data-attack="1" data-life="4">
+		<img src="./Images/Cartes/Core/Pets/Common pets/Bat.png" alt="Bat"
+			class="catalogue-card" data-type="feroce" data-rarity="commune" data-attack="2" data-life="4">
+		<img src="./Images/Cartes/Core/Pets/Common pets/Bear.png" alt="Bear"
+			class="catalogue-card" data-type="tenace" data-rarity="commune" data-attack="2" data-life="5">
+		<img src="./Images/Cartes/Core/Pets/Common pets/Beetle.png" alt="Beetle"
+			class="catalogue-card" data-type="tenace" data-rarity="commune" data-attack="2" data-life="6">
+		<img src="./Images/Cartes/Core/Pets/Common pets/Bird_of_Prey.png" alt="Bird of Prey"
+			class="catalogue-card" data-type="ruse" data-rarity="commune" data-attack="2" data-life="5">
+		<img src="./Images/Cartes/Core/Pets/Common pets/Blood_Beast.png" alt="Blood Beast"
+			class="catalogue-card" data-type="tenace" data-rarity="commune" data-attack="2" data-life="6">
+		<img src="./Images/Cartes/Core/Pets/Common pets/Boar.png" alt="Boar"
+			class="catalogue-card" data-type="ruse" data-rarity="commune" data-attack="2" data-life="4">
+		<img src="./Images/Cartes/Core/Pets/Exotic pets/Caline.png" alt="Caline"
+			class="catalogue-card" data-rarity="exotique" data-attack="2" data-life="5">
+		<img src="./Images/Cartes/Core/Pets/Exotic pets/Carapid.png" alt="Carapid"
+			class="catalogue-card" data-type="tenace" data-rarity="exotique" data-attack="3" data-life="2">
+		<img src="./Images/Cartes/Core/Pets/Common pets/Carrion_Bird.png" alt="Carrion Bird"
+			class="catalogue-card" data-type="feroce" data-rarity="commune" data-attack="1" data-life="5">
+		<img src="./Images/Cartes/Core/Pets/Common pets/Cat.png" alt="Cat"
+			class="catalogue-card" data-type="feroce" data-rarity="commune" data-attack="2" data-life="4">
+		<img src="./Images/Cartes/Core/Pets/Exotic pets/Chimaera.png" alt="Chimaera"
+			class="catalogue-card" data-type="feroce" data-rarity="exotique" data-attack="1" data-life="4">
+		<img src="./Images/Cartes/Core/Pets/Common pets/Clefthoof.png" alt="Clefthoof"
+			class="catalogue-card" data-type="feroce" data-rarity="commune" data-attack="2" data-life="6">
+		<img src="./Images/Cartes/Core/Pets/Exotic pets/Core_Hound.png" alt="Core Hound"
+			class="catalogue-card" data-type="feroce" data-rarity="exotique" data-attack="1" data-life="6">
+		<img src="./Images/Cartes/Core/Pets/Common pets/Crab.png" alt="Crab"
+			class="catalogue-card" data-type="tenace" data-rarity="commune" data-attack="2" data-life="6">
+		<img src="./Images/Cartes/Core/Pets/Common pets/Crocilisk.png" alt="Crocilisk"
+			class="catalogue-card" data-type="feroce" data-rarity="commune" data-attack="2" data-life="4">
+		<img src="./Images/Cartes/Core/Pets/Exotic pets/Devilsaur.png" alt="Devilsaur"
+			class="catalogue-card" data-type="feroce" data-rarity="exotique" data-attack="1" data-life="1">
+		<img src="./Images/Cartes/Core/Pets/Common pets/Direhorn.png" alt="Direhorn"
+			class="catalogue-card" data-type="tenace" data-rarity="commune" data-attack="1" data-life="6">
+		<img src="./Images/Cartes/Core/Pets/Common pets/Dragonhawk.png" alt="Dragonhawk"
+			class="catalogue-card" data-type="tenace" data-rarity="commune" data-attack="2" data-life="5">
+		<img src="./Images/Cartes/Core/Pets/Common pets/Feathermane.png" alt="Feathermane"
+			class="catalogue-card" data-type="tenace" data-rarity="commune" data-attack="1" data-life="5">
+		<img src="./Images/Cartes/Core/Pets/Common pets/Fox.png" alt="Fox"
+			class="catalogue-card" data-type="ruse" data-rarity="commune" data-attack="2" data-life="5">
+		<img src="./Images/Cartes/Core/Pets/Common pets/Gorilla.png" alt="Gorilla"
+			class="catalogue-card" data-type="feroce" data-rarity="commune" data-attack="3" data-life="5">
+		<img src="./Images/Cartes/Core/Pets/Common pets/Gruffhorn.png" alt="Gruffhorn"
+			class="catalogue-card" data-type="ruse" data-rarity="commune" data-attack="1" data-life="6">
+		<img src="./Images/Cartes/Core/Pets/Common pets/Hopper.png" alt="Hopper"
+			class="catalogue-card" data-type="tenace" data-rarity="commune" data-attack="1" data-life="6">
+		<img src="./Images/Cartes/Core/Pets/Common pets/Hound.png" alt="Hound"
+			class="catalogue-card" data-type="ruse" data-rarity="commune" data-attack="2" data-life="5">
+		<img src="./Images/Cartes/Core/Pets/Common pets/Hydra.png" alt="Hydra"
+			class="catalogue-card" data-type="tenace" data-rarity="commune" data-attack="3" data-life="6">
+		<img src="./Images/Cartes/Core/Pets/Common pets/Hyena.png" alt="Hyena"
+			class="catalogue-card" data-type="ruse" data-rarity="commune" data-attack="1" data-life="5">
+		<img src="./Images/Cartes/Core/Pets/Common pets/Lizard.png" alt="Lizard"
+			class="catalogue-card" data-type="tenace" data-rarity="commune" data-attack="3" data-life="6">
+		<img src="./Images/Cartes/Core/Pets/Common pets/Mechanical.png" alt="Mechanical"
+			class="catalogue-card" data-type="ruse" data-rarity="commune" data-attack="2" data-life="5">
+		<img src="./Images/Cartes/Core/Pets/Common pets/Monkey.png" alt="Monkey"
+			class="catalogue-card" data-type="ruse" data-rarity="commune" data-attack="2" data-life="4">
+		<img src="./Images/Cartes/Core/Pets/Common pets/Moth.png" alt="Moth"
+			class="catalogue-card" data-type="ruse" data-rarity="commune" data-attack="1" data-life="5">
+		<img src="./Images/Cartes/Core/Pets/Common pets/Oxen.png" alt="Oxen"
+			class="catalogue-card" data-type="tenace" data-rarity="commune" data-attack="1" data-life="6">
+		<img src="./Images/Cartes/Core/Pets/Exotic pets/Pterrordax.png" alt="Pterrodax"
+			class="catalogue-card" data-type="ruse" data-rarity="exotique" data-attack="2" data-life="6">
+		<img src="./Images/Cartes/Core/Pets/Common pets/Raptor.png" alt="Raptor"
+			class="catalogue-card" data-type="ruse" data-rarity="commune" data-attack="1" data-life="5">
+		<img src="./Images/Cartes/Core/Pets/Common pets/Ravager.png" alt="Ravager"
+			class="catalogue-card" data-type="feroce" data-rarity="commune" data-attack="1" data-life="6">
+		<img src="./Images/Cartes/Core/Pets/Common pets/Ray.png" alt="Ray"
+			class="catalogue-card" data-type="feroce" data-rarity="commune" data-attack="2" data-life="5">
+		<img src="./Images/Cartes/Core/Pets/Common pets/Riverbeast.png" alt="Riverbeast"
+			class="catalogue-card" data-type="tenace" data-rarity="commune" data-attack="2" data-life="5">
+		<img src="./Images/Cartes/Core/Pets/Common pets/Rodent.png" alt="Rodent"
+			class="catalogue-card" data-type="ruse" data-rarity="commune" data-attack="2" data-life="5">
+		<img src="./Images/Cartes/Core/Pets/Common pets/Scalehide.png" alt="Scalehide"
+			class="catalogue-card" data-type="feroce" data-rarity="commune" data-attack="2" data-life="6">
+		<img src="./Images/Cartes/Core/Pets/Common pets/Scorpid.png" alt="Scorpid"
+			class="catalogue-card" data-type="feroce" data-rarity="commune" data-attack="1" data-life="4">
+		<img src="./Images/Cartes/Core/Pets/Common pets/Serpent.png" alt="Serpent"
+			class="catalogue-card" data-type="ruse" data-rarity="commune" data-attack="1" data-life="5">
+		<img src="./Images/Cartes/Core/Pets/Exotic pets/Shale_Beast.png" alt="Shale Beast"
+			class="catalogue-card" data-type="ruse" data-rarity="exotique" data-attack="1" data-life="4">
+		<img src="./Images/Cartes/Core/Pets/Common pets/Spider.png" alt="Spider"
+			class="catalogue-card" data-type="feroce" data-rarity="commune" data-attack="1" data-life="5">
+		<img src="./Images/Cartes/Core/Pets/Exotic pets/Spirit_Beast.png" alt="Spirit Beast"
+			class="catalogue-card" data-type="tenace" data-rarity="exotique" data-attack="1" data-life="5">
+		<img src="./Images/Cartes/Core/Pets/Common pets/Sporebat.png" alt="Sporebat"
+			class="catalogue-card" data-type="ruse" data-rarity="commune" data-attack="1" data-life="4">
+		<img src="./Images/Cartes/Core/Pets/Common pets/Stag.png" alt="Stag"
+			class="catalogue-card" data-type="tenace" data-rarity="commune" data-attack="3" data-life="6">
+		<img src="./Images/Cartes/Core/Pets/Exotic pets/Stone_Hound.png" alt="Stone Hound"
+			class="catalogue-card" data-type="tenace" data-rarity="exotique" data-attack="2" data-life="4">
+		<img src="./Images/Cartes/Core/Pets/Common pets/Tallstrider.png" alt="Tallstrider"
+			class="catalogue-card" data-type="feroce" data-rarity="commune" data-attack="2" data-life="2">
+		<img src="./Images/Cartes/Core/Pets/Common pets/Turtle.png" alt="Turtle"
+			class="catalogue-card" data-type="tenace" data-rarity="commune" data-attack="1" data-life="5">
+		<img src="./Images/Cartes/Core/Pets/Common pets/Wasp.png" alt="Wasp"
+			class="catalogue-card" data-type="feroce" data-rarity="commune" data-attack="3" data-life="4">
+		<img src="./Images/Cartes/Core/Pets/Exotic pets/Water_Strider.png" alt="Water Strider"
+			class="catalogue-card" data-type="ruse" data-rarity="exotique" data-attack="2" data-life="5">
+		<img src="./Images/Cartes/Core/Pets/Common pets/Waterfowl.png" alt="Waterfowl"
+			class="catalogue-card"data-type="tenace" data-rarity="commune" data-attack="1" data-life="6">
+		<img src="./Images/Cartes/Core/Pets/Common pets/Wind_Serpent.png" alt="Wind Serpent"
+			class="catalogue-card" data-type="feroce" data-rarity="commune" data-attack="2" data-life="5">
+		<img src="./Images/Cartes/Core/Pets/Common pets/Wolf.png" alt="Wolf"
+			class="catalogue-card" data-type="feroce" data-rarity="commune" data-attack="1" data-life="5">
+		<img src="./Images/Cartes/Core/Pets/Exotic pets/Worm.png" alt="Worm"
+			class="catalogue-card" data-type="tenace" data-rarity="exotique" data-attack="1" data-life="5">
+		<img src="./Images/Cartes/Core/Pets/Common pets/Wrap_Stalker.png" alt="Wrap Stalker"
+			class="catalogue-card" data-type="ruse" data-rarity="commune" data-attack="1" data-life="5">
+	</div>
+	<h1 id="armes-title" class="catalogue-h1">Weapons available</h1>
+	<div class="catalogue" id="armes-catalogue">
+		<img src="./Images/Cartes/Core/Weapons/Arathar.png" alt="Arathar" class="catalogue-card"
+			data-attack="3" data-life="3">
+		<img src="./Images/Cartes/Core/Weapons/Ashjre_thul.png" alt="Ashjre'thul" class="catalogue-card"
+			data-attack="3" data-life="3">
+		<img src="./Images/Cartes/Core/Weapons/Dominion.png" alt="Dominion" class="catalogue-card"
+			data-attack="2" data-life="2">
+		<img src="./Images/Cartes/Core/Weapons/Fal_inrush.png" alt="Fal'inrush" class="catalogue-card"
+			data-attack="3" data-life="2">
+		<img src="./Images/Cartes/Core/Weapons/Fang_Kung.png" alt="Fang Kung" class="catalogue-card"
+			data-attack="2" data-life="3">
+		<img src="./Images/Cartes/Core/Weapons/Kiril.png" alt="Kiril" class="catalogue-card"
+			data-attack="2" data-life="4">
+		<img src="./Images/Cartes/Core/Weapons/Klatith.png" alt="Klatith" class="catalogue-card"
+			data-attack="2" data-life="3">
+		<img src="./Images/Cartes/Core/Weapons/Lotrafen.png" alt="Lotrafen" class="catalogue-card"
+			data-attack="6" data-life="3">
+		<img src="./Images/Cartes/Core/Weapons/Miracoran.png" alt="Miracoran" class="catalogue-card"
+			data-attack="2" data-life="4">
+		<img src="./Images/Cartes/Core/Weapons/Oathbinder.png" alt="Oathbinder" class="catalogue-card"
+			data-attack="3" data-life="3">
+		<img src="./Images/Cartes/Core/Weapons/Rhok_delar.png" alt="Rhok'delar" class="catalogue-card"
+			data-attack="1" data-life="4">
+		<img src="./Images/Cartes/Core/Weapons/Screaming_Tiger.png" alt="Screaming Tiger" class="catalogue-card"
+			data-attack="4" data-life="2">
+		<img src="./Images/Cartes/Core/Weapons/Shan-Dun.png" alt="Shan-Dun" class="catalogue-card"
+			data-attack="1" data-life="4">
+		<img src="./Images/Cartes/Core/Weapons/Tal_rak.png" alt="Tal'rak" class="catalogue-card"
+			data-attack="3" data-life="2">
+		<img src="./Images/Cartes/Core/Weapons/Talonclaw.png" alt="Talonclaw" class="catalogue-card"
+			data-attack="3" data-life="4">
+		<img src="./Images/Cartes/Core/Weapons/Taoren.png" alt="Taoren" class="catalogue-card"
+			data-attack="2" data-life="3">
+		<img src="./Images/Cartes/Core/Weapons/Thas_dorah.png" alt="Thas'dorah" class="catalogue-card"
+			data-attack="3" data-life="3">
+		<img src="./Images/Cartes/Core/Weapons/Thori_dal.png" alt="Thori'dal" class="catalogue-card"
+			data-attack="3" data-life="4">
+		<img src="./Images/Cartes/Core/Weapons/Titanstrike.png" alt="Titanstrike" class="catalogue-card"
+			data-attack="2" data-life="4">
+		<img src="./Images/Cartes/Core/Weapons/Vishanka.png" alt="Vishanka" class="catalogue-card"
+			data-attack="3" data-life="3">
+		<img src="./Images/Cartes/Core/Weapons/Xu_tenash.png" alt="Xu'tenash" class="catalogue-card"
+			data-attack="4" data-life="3">
+	</div>
+	<h1 id="sorts-title" class="catalogue-h1">Spells available</h1>
+	<div class="catalogue-sorts" id="sorts-catalogue">
+		<img src="./Images/Cartes/Core/Spells/Aiming.png" alt="Aiming"
+			class="catalogue-card">
+		<img src="./Images/Cartes/Core/Spells/Arcane_Shot.png" alt="Arcane Shot"
+			class="catalogue-card">
+		<img src="./Images/Cartes/Core/Spells/Aspect_of_the_Beast.png" alt="Aspect of the Beast"
+			class="catalogue-card">
+		<img src="./Images/Cartes/Core/Spells/Aspect_of_the_Cheetah.png" alt="Aspect of the Cheetah"
+			class="catalogue-card">
+		<img src="./Images/Cartes/Core/Spells/Aspect_of_the_Hawk.png" alt="Aspect of the Hawk"
+			class="catalogue-card">
+		<img src="./Images/Cartes/Core/Spells/Aspect_of_the_Monkey.png" alt="Aspect of the Monkey"
+			class="catalogue-card">
+		<img src="./Images/Cartes/Core/Spells/Aspect_of_the_Pack.png" alt="Aspect of the Pack"
+			class="catalogue-card">
+		<img src="./Images/Cartes/Core/Spells/Aspect_of_the_Wild.png" alt="Aspect of the Wild"
+			class="catalogue-card">
+		<img src="./Images/Cartes/Core/Spells/Beast_Lore.png" alt="Beast Lore"
+			class="catalogue-card">
+		<img src="./Images/Cartes/Core/Spells/Bestial_Wrath.png" alt="Bestial Wrath"
+			class="catalogue-card">
+		<img src="./Images/Cartes/Core/Spells/Call_Pet.png" alt="Call Pet"
+			class="catalogue-card">
+		<img src="./Images/Cartes/Core/Spells/Concussive_Trait.png" alt="Concussive Trait"
+			class="catalogue-card">
+		<img src="./Images/Cartes/Core/Spells/Counterattack.png" alt="Counterattack"
+			class="catalogue-card">
+		<img src="./Images/Cartes/Core/Spells/Deterrence.png" alt="Deterrence"
+			class="catalogue-card">
+		<img src="./Images/Cartes/Core/Spells/Disengage.png" alt="Disengage"
+			class="catalogue-card">
+		<img src="./Images/Cartes/Core/Spells/Dismiss_Pet.png" alt="Dismiss Pet"
+			class="catalogue-card">
+		<img src="./Images/Cartes/Core/Spells/Distracting_Trait.png" alt="Distracting Trait"
+			class="catalogue-card">
+		<img src="./Images/Cartes/Core/Spells/Eagle_Eye.png" alt="Eagle Eye"
+			class="catalogue-card">
+		<img src="./Images/Cartes/Core/Spells/Explosive_Trap.png" alt="Explosive Trap"
+			class="catalogue-card">
+		<img src="./Images/Cartes/Core/Spells/Eyes_of_the_Beast.png" alt="Eyes of the Beast"
+			class="catalogue-card">
+		<img src="./Images/Cartes/Core/Spells/Feed_Pet.png" alt="Feed Pet"
+			class="catalogue-card">
+		<img src="./Images/Cartes/Core/Spells/Feign_Death.png" alt="Feign Death"
+			class="catalogue-card">
+		<img src="./Images/Cartes/Core/Spells/Flare.png" alt="Flare"
+			class="catalogue-card">
+		<img src="./Images/Cartes/Core/Spells/Freezing_Trap.png" alt="Freezing Trap"
+			class="catalogue-card">
+		<img src="./Images/Cartes/Core/Spells/Frost_Trap.png" alt="Frost Trap"
+			class="catalogue-card">
+		<img src="./Images/Cartes/Core/Spells/Growl.png" alt="Growl"
+			class="catalogue-card">
+		<img src="./Images/Cartes/Core/Spells/Hunters_Mark.png" alt="Hunter's Mark"
+			class="catalogue-card">
+		<img src="./Images/Cartes/Core/Spells/Immolation_Trap.png" alt="Immolation Trap"
+			class="catalogue-card">
+		<img src="./Images/Cartes/Core/Spells/Intimidation.png" alt="Intimidation"
+			class="catalogue-card">
+		<img src="./Images/Cartes/Core/Spells/Mend_Pet.png" alt="Mend Pet"
+			class="catalogue-card">
+		<img src="./Images/Cartes/Core/Spells/Mongoose_Bite.png" alt="Mongoose Bite"
+			class="catalogue-card">
+		<img src="./Images/Cartes/Core/Spells/Multi_Shot.png" alt="Multi Shot"
+			class="catalogue-card">
+		<img src="./Images/Cartes/Core/Spells/Rapid_Shot.png" alt="Rapid Shot"
+			class="catalogue-card">
+		<img src="./Images/Cartes/Core/Spells/Raptor_Strike.png" alt="Raptor Strike"
+			class="catalogue-card">
+		<img src="./Images/Cartes/Core/Spells/Readiness.png" alt="Readiness"
+			class="catalogue-card">
+		<img src="./Images/Cartes/Core/Spells/Revive_Pet.png" alt="Revive Pet"
+			class="catalogue-card">
+		<img src="./Images/Cartes/Core/Spells/Scare_Beast.png" alt="Scare Beast"
+			class="catalogue-card">
+		<img src="./Images/Cartes/Core/Spells/Scatter_Shot.png" alt="Scatter Shot"
+			class="catalogue-card">
+		<img src="./Images/Cartes/Core/Spells/Scorpid_Sting.png" alt="Scorpid Sting"
+			class="catalogue-card">
+		<img src="./Images/Cartes/Core/Spells/Serpent_Sting.png" alt="Serpent Sting"
+			class="catalogue-card">
+		<img src="./Images/Cartes/Core/Spells/Tame_Beast.png" alt="Tame Beast"
+			class="catalogue-card">
+		<img src="./Images/Cartes/Core/Spells/Tracking.png" alt="Tracking"
+			class="catalogue-card">
+		<img src="./Images/Cartes/Core/Spells/Tranquilizing_Shot.png" alt="Tranquilizing Shot"
+			class="catalogue-card">
+		<img src="./Images/Cartes/Core/Spells/Trueshot_Aura.png" alt="Trueshot Aura"
+			class="catalogue-card">
+		<img src="./Images/Cartes/Core/Spells/Viper_Sting.png" alt="Viper Sting"
+			class="catalogue-card">
+		<img src="./Images/Cartes/Core/Spells/Volley.png" alt="Volley"
+			class="catalogue-card">
+		<img src="./Images/Cartes/Core/Spells/Wing_Clip.png" alt="Wing Clip"
+			class="catalogue-card">
+		<img src="./Images/Cartes/Core/Spells/Wyvern_Sting.png" alt="Wyvern Sting"
+			class="catalogue-card">
+	</div>
+	<footer>
+		<script src="./JS/daynight.js"></script>
+		<div class="footer">
+			<p><i><u>In the Trueshot Lodge</u> is compliant with the general terms of use requested by
+					Blizzard Entertainment while respecting the intellectual property rights related to World
+					of Warcraft</i></p>
+			<p><i><u>In the Trueshot Lodge</u> is registered in the <u><a href="https://atelier197.carrd.co/"
+					target="_blank" rel="noopener noreferrer">Atelier 197</a> initiative</i></u></p>
+		</div>
+	</footer>
+	<script src="JS/catalogue.js"></script>
+</body>
+</html>

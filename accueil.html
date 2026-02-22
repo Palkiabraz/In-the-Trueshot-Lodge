@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>In the Trueshot Lodge</title>
+	<link rel="stylesheet" href="./CSS/style.css">
+	<link rel="stylesheet" href="./CSS/accueil.css">
+	<link rel="icon" href="./Images/Icone.png" />
+</head>
+
+<body>
+	<header class="header">
+		<div class="header-top">
+			<div class="logo">
+				<img src="./Images/Logo.PNG" alt="Logo" height="250">
+			</div>
+			<div class="header-controls">
+				<button id="bg-toggle" class="bg-toggle" aria-label="Change the background">
+					<img src="./Images/Daynight.png" alt="Change the background">
+				</button>
+			</div>
+		</div>
+		<nav class="menu">
+			<ul>
+				<li><a href="accueil.html">Home</a></li>
+				<li><a href="presentation.html">Presentation</a></li>
+				<li><a href="catalogue.html">Card Library</a></li>
+				<li><a href="extensions.html">Expansions</a></li>
+			</ul>
+		</nav>
+	</header>
+	<h1>Welcome in the Trueshot Lodge !</h1>
+	<p class="subtitle first-subtitle">
+		<i>"You have just entered the sacred domain of all hunters, hidden among the highest snow-capped peaks of Highmountain.
+			This domain gathers the greatest hunters Azeroth has ever known and is governed by the Unseen Path, an order
+			bringing together the finest hunters among them.</i>
+	</p>
+	<p class="subtitle first-subtitle">
+		<i>Within these halls, only <u>one</u> rule matters: survival of the fittest !"</i>
+	</p>
+	<hr class="subtitle-bar">
+	<p class="subtitle second-subtitle">
+		<u>In the Trueshot Lodge</u> is a competitive turn-based board game incorporating elements of chance and strategy.
+	</p>
+	<p class="subtitle second-subtitle">
+		Tame pets with unique effects, ranging from a loyal Hound to an impressive Hydra. Purchase weapons as formidable
+		as they are varied, such as crossbows, hunting spears, or rifles. Cast powerful spells capable of turning the tide
+		of the game, including shots, traps, and more.
+	</p>
+	<p class="subtitle second-subtitle">
+		Deploy your entire arsenal, gathered progressively throughout the match, to defeat your opponents and claim victory !
+	</p>
+	<hr class="subtitle-bar">
+	<p class="subtitle">
+		<u>In the Trueshot Lodge</u> is available for free in <b>printable</b> and <b>digital</b> versions on the Steam Workshop
+		of <u>Tabletop Simulator</u>.
+	</p>
+	<div class="buttons-container">
+		<button class="button-printable">
+			<a href="./Fichiers/In_the_Trueshot_Lodge.zip" download class="button-printable">
+				<img src="./Images/Imprimable.png" alt="Download the printable version">
+				<span class="button-text"><b>PRINTABLE VERSION</b></span>
+			</a>
+		</button>
+		<button class="button-workshop">
+			<a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3644299855" target="_blank"
+				rel="noopener noreferrer" class="button-workshop">
+				<img src="./Images/Numerique.png" alt="Download the digital version">
+				<span class="button-text"><b>DIGITAL VERSION</b></span>
+			</a>
+		</button>
+		<div class="button-with-price">
+			<button class="button-steam">
+				<a href="https://store.steampowered.com/app/286160/Tabletop_Simulator/" target="_blank"
+					rel="noopener noreferrer" class="button-steam">
+					<img src="./Images/Steam.png" alt="Buy Tabletop Simulator">
+					<span class="button-text"><b>TABLETOP SIMULATOR</b></span>
+				</a>
+			</button>
+			<p id="ttprice"></p>
+		</div>
+	</div>
+	<footer>
+		<div class="footer">
+			<p><i><u>In the Trueshot Lodge</u> is compliant with the general terms of use requested by
+					Blizzard Entertainment while respecting the intellectual property rights related to World
+					of Warcraft</i></p>
+			<p><i><u>In the Trueshot Lodge</u> is registered in the <u><a href="https://atelier197.carrd.co/"
+					target="_blank" rel="noopener noreferrer">Atelier 197</a> initiative</i></u></p>
+		</div>
+	</footer>
+	<script src="./JS/daynight.js"></script>
+	<script src="./JS/prix.js"></script>
+</body>
+</html>

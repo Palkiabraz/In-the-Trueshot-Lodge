@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>In the Trueshot Lodge</title>
+	<link rel="stylesheet" href="./CSS/style.css">
+	<link rel="stylesheet" href="./CSS/presentation.css">
+	<link rel="icon" href="./Images/Icone.png" />
+</head>
+
+<body>
+	<header class="header">
+		<div class="header-top">
+			<div class="logo">
+				<img src="./Images/Logo.PNG" alt="Logo" height="250 px">
+			</div>
+			<div class="header-controls">
+				<button id="bg-toggle" class="bg-toggle" aria-label="Change the background">
+					<img src="./Images/Daynight.png" alt="Change the background">
+				</button>
+			</div>
+		</div>
+		<nav class="menu">
+			<ul>
+				<li><a href="accueil.html">Home</a></li>
+				<li><a href="presentation.html">Presentation</a></li>
+				<li><a href="catalogue.html">Card Library</a></li>
+				<li><a href="extensions.html">Expansions</a></li>
+			</ul>
+		</nav>
+	</header>
+	<button class="button-rules">
+		<a href="./Fichiers/Gamerules.pdf" download class="button-rules">
+			<img src="./Images/Regles.png" alt="Download the game rules">
+			<span class="button-text">Want to prove your worth, hunter of Azeroth ?
+				<br>Get the game rules and get started !
+			</span>
+		</a>
+	</button>
+	<hr class="subtitle-bar">
+	<div class="familier-section">
+		<h2>Tame pets with unique effects !</h2>
+		<i class="quote">“Pets are your animal allies from Azeroth and beyond, fighting for you to the death.”</i>
+		<img src="./Images/Cartes/Core/Pets/Common pets/Hyena.png" alt="Pet Exemple"
+			class="familier-image">
+		<div class="familier-text">
+			<br>A pet has one of three available types : <b>Ferocious</b>, <b>Cunning</b> or <b>Tenacious</b>.
+			Each type is advantaged over another type, removing an additional Health when the pet attacks.
+			<div class="familier-type">
+				<div class="type-item">
+					<img src="./Images/Feroce.jpg" alt="Ferocious Type" class="type-icon">
+					<p class="type-text"><i>Ferocious</i></p>
+				</div>
+				<div class="type-item">
+					<img src="./Images/Ruse.jpg" alt="Cunning Type" class="type-icon">
+					<p class="type-text"><i>Cunning</i></p>
+				</div>
+				<div class="type-item">
+					<img src="./Images/Tenace.jpg" alt="Tenacious Type" class="type-icon">
+					<p class="type-text"><i>Tenacious</i></p>
+				</div>
+			</div>
+			<br>A pet has a rarity among two available : <b>Common</b> or <b>Exotic</b>. Common pets are available in
+				two copies while exotic pets are only available in one copy.
+			<br>
+			<br>A pet has an <b>Attack</b> value and a <b class="vie">Health</b> value as well as a unique effect.
+		</div>
+	</div>
+	<div class="arme-section">
+		<h2>Purchase weapons as formidable as they are varied !</h2>
+		<i class="quote">“The weapon is your only equipment available during this struggle of power.”</i>
+		<div class="arme-text">
+			<br>A weapon has a unique effect and an <b>Attack</b> value and a <b class="cout">Cost</b> value.
+			<br>
+			<br>Each player has five <b>Coins</b> at their disposal to purchase a weapon. When the weapon is
+				purchased, the player spends a number of <b>Coins</b> equivalent to the <b class="cout">Cost</b>
+				of the weapon. However, if the weapon is not suitable for the player, they have the possibility
+				to sell it and receive back the value of the spent <b>Coins</b>, minus one <b>Coin</b>.
+		</div>
+		<img src="./Images/Cartes/Core/Weapons/Rhok_delar.png" alt="Weapon Exemple" class="arme-image">
+	</div>
+	<div class="sort-section">
+		<h2>Cast powerful spells capable of turning the tide of the game !</h2>
+		<i class="quote">“Spells are single-use abilities that provide a strategic advantage over others.”</i>
+		<img src="./Images/Cartes/Core/Spells/Feed_Pet.png" alt="Spell Exemple" class="sort-image">
+		<div class="sort-text">
+			<br>A spell has a unique effect and a name.
+			<br>
+			<br>Indeed, unlike other cards, the name of a spell is important. Some pets interact with specific spells, enhancing them significantly.
+			<br>
+			<br>Spells with special names are the <b>Aspect</b>, <b>Arrow</b>, <b>Bite</b>, <b>Sting</b>, and <b>Shot</b> spells.
+		</div>
+	</div>
+	<footer>
+		<div class="footer">
+			<p><i><u>In the Trueshot Lodge</u> is compliant with the general terms of use requested by
+					Blizzard Entertainment while respecting the intellectual property rights related to World
+					of Warcraft</i></p>
+			<p><i><u>In the Trueshot Lodge</u> is registered in the <u><a href="https://atelier197.carrd.co/"
+					target="_blank" rel="noopener noreferrer">Atelier 197</a> initiative</i></u></p>
+		</div>
+	</footer>
+	<script src="./JS/daynight.js"></script>
+</body>
+</html>

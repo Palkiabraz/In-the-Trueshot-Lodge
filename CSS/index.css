@@ -1,0 +1,57 @@
+.logo-index-placement{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2vh 2vw;
+    text-align: center;
+}
+
+.logo-index{
+    width: clamp(200px, 85vw, 1200px);
+    height: auto;
+    display: block;
+}
+
+.logo-index:hover{
+    transform: scale(1.1);
+    transform-origin: center;
+    transition: transform 0.3s ease, width 0.2s ease;
+    will-change: transform, width;
+}
+
+.logo-index-link{
+    display: inline-block;
+}
+
+.logo-index.playing{
+    transform: scale(1.1);
+    transform-origin: center;
+}
+
+#bg-toggle {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 9999;
+}
+
+.logo-credit {
+    font-size: 0.75rem;
+    margin-top: 2rem;
+    color: #ffffff;
+    font-style: italic;
+}
+
+.logo-credit a {
+    color: inherit;
+    text-decoration: none;
+    display: inline-block;
+    font-weight: 400;
+}
+
+.logo-credit a:hover {
+    text-decoration: none;
+    font-weight: 700;
+}
