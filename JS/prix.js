@@ -14,7 +14,7 @@ async function fetchTabletopPrice() {
 			const currency = priceOverview.currency;
 
 			document.getElementById('ttprice').textContent =
-				`${finalPrice} €`;
+				`${finalPrice} $`;
 
 			console.log(`Tabletop Simulator Price: ${finalPrice} ${currency}`);
 		} else {

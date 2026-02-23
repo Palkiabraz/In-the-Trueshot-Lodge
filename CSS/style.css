@@ -73,6 +73,34 @@ body {
     height: 250px;
 }
 
+.switch-language {
+    position: absolute;
+    left: 1rem;
+    bottom: 0rem;
+    z-index: 50;
+}
+
+.flag-btn {
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+}
+
+.flag-btn img {
+    height: 48px;
+    display: block;
+    border: 1px solid #fff;
+    box-sizing: border-box;
+}
+
+.flag-btn:hover img {
+    transform: scale(1.1);
+    transition: transform 0.3s;
+}
+
 .bg-toggle{
     background: transparent;
     border: none;
@@ -84,6 +112,8 @@ body {
     height: 48px;
     display: block;
     transition: transform 0.3s; 
+    border: 1px solid #fff;
+    box-sizing: border-box;
 }
 
 .bg-toggle:hover img, .bg-toggle:focus img{
