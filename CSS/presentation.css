@@ -37,6 +37,7 @@ button.button-rules {
 .button-rules img {
     width: 50px; 
     height: auto;
+    border: 1px solid #fff;
 }
 
 .button-rules span {

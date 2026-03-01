@@ -43,6 +43,21 @@
 					target="_blank" rel="noopener noreferrer">Atelier 197</a> initiative</i></u></p>
 		</div>
 	</footer>
+	<button id="contact-btn" aria-label="Contact">
+		<img id="contact-icon" src="./Images/Contact.jpg" alt="Contact" onerror="this.onerror=null;this.src='./Images/Contact.png';">
+	</button>
+	<form id="contact" aria-hidden="true">
+		<h3>Want to contact me ? </h3>
+		<label for="name">Name</label>
+		<input type="text" id="name" name="name" required>
+		<label for="email">Mail or Discord</label>
+		<input type="email" id="email" name="email" required>
+		<label for="message">Message</label>
+		<textarea id="message" name="message" rows="5" required></textarea>
+		<div class="submit-row">
+			<button type="button" onclick="submitForm()">Send</button>
+		</div>
+	</form>
 	<script src="./JS/daynight.js"></script>
 	<script src="./JS/switch.js"></script>
 </body>
