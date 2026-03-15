@@ -144,3 +144,30 @@ button.button-download {
     word-wrap: break-word;
     padding: 0 2px;
 }
+
+@media (max-width: 600px){
+    .button-download {
+        width: 95%;
+        padding: 0.6rem;
+        font-size: 1rem;
+        margin: 0.5rem auto;
+    }
+
+    .button-download a {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        gap: 0.5rem;
+    }
+
+    .button-download img {
+        width: 40px;
+        height: auto;
+        margin: 0;
+    }
+
+    .extension-content{
+        grid-template-columns: 1fr; 
+        gap: 40px; 
+    }
+}
