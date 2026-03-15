@@ -392,11 +392,23 @@ h2 {
 
 @media (max-width: 600px) {
     .menu {
+        overflow-x: auto;
+        overflow-y: hidden;
         -webkit-overflow-scrolling: touch;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
     }
-    .menu ul {
+
+    .menu::-webkit-scrollbar{
+        display: none;
+    }
+
+    .menu ul{
         padding: 0 0.5rem;
-    } 
+        width: max-content;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+    }
 
     .menu a {
         min-width: 0;
