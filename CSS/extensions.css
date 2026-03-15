@@ -146,6 +146,16 @@ button.button-download {
 }
 
 @media (max-width: 600px){
+    .extension,
+    .extension-header,
+    .extension-description,
+    .extension-column,
+    .card-caption {
+        padding-left: 1rem;
+        padding-right: 1rem;
+        box-sizing: border-box;
+    }
+
     .button-download {
         width: 95%;
         padding: 0.6rem;

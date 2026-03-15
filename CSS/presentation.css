@@ -344,6 +344,7 @@ button.button-rules {
         max-width: 100%;
         text-align: center;
         margin-top: 0.25rem;
+        margin-right: 0;
         padding: 0 0.25rem;
     }
 
