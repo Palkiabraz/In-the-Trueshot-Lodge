@@ -59,7 +59,7 @@
 
 .extension-column img{
     width: 100%;
-    border-radius: 10px;
+    border-radius: 0;
 }
 
 .button-download{
@@ -127,7 +127,7 @@ button.button-download {
 .card img {
     width: 40px;
     height: auto;
-    border-radius: 10px;
+    border-radius: 0;
     display: block;
     margin: 0 auto;
 }
