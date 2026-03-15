@@ -342,7 +342,7 @@ button.button-rules {
     .familier-text, .arme-text, .sort-text {
         position: static;
         max-width: 100%;
-        text-align: left;
+        text-align: center;
         margin-top: 0.25rem;
         padding: 0 0.25rem;
     }
@@ -350,10 +350,6 @@ button.button-rules {
     .familier-text p, .sort-text p {
         font-size: 1rem;
         line-height: 1.5;
-    }
-
-    .familier-text, .arme-text, .sort-text {
-        text-align: center;
     }
 
     .type-icon {

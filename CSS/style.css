@@ -73,13 +73,6 @@ body {
     height: 250px;
 }
 
-.switch-language {
-    position: absolute;
-    left: 1rem;
-    bottom: 0rem;
-    z-index: 50;
-}
-
 .flag-btn {
     background: transparent;
     border: none;
@@ -399,7 +392,6 @@ h2 {
 
 @media (max-width: 600px) {
     .menu {
-        overflow-x: auto;
         -webkit-overflow-scrolling: touch;
     }
     .menu ul {
@@ -415,6 +407,10 @@ h2 {
         flex: 0 0 auto; 
     }
 
+    .menu .dropdown {
+        min-width: 50px;
+    }
+
     .logo img {
         height: 120px;
         width: auto;
@@ -425,16 +421,25 @@ h2 {
         width: auto;
     }
 
+    .header-controls {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;  
+        gap: 0.25rem;
+    }
+
+    .flag-btn {
+        margin-right: 4px;
+    }
+
     .flag-btn img {
         height: 36px;
         width: auto;
     }
-    
-    .switch-language {
-        position: static;
-        display: flex;
-        justify-content: center;
-        margin: 0.25rem auto 0;
+
+    .bg-toggle img {
+        height: 36px;
+        width: auto;
     }
 
     .footer {
@@ -455,4 +460,10 @@ h2 {
         height: 36px;
         width: auto;
     }
+
+@media (max-width: 500px) {
+    .menu .dropdown {
+        min-width: 0px;
+    }
+}
 }

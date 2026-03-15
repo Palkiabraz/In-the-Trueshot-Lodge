@@ -357,19 +357,26 @@
     }
 
     .filter-buttons {
-        flex-wrap: wrap;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
         gap: 0.75rem;
-    }
-
-    #category-dropdown-wrap, #type-dropdown-wrap {
-        order: 1;
-    }
-
-    #rarity-dropdown-wrap {
-        order: 2;
-        width: 100%;
-        display: flex;
         justify-content: center;
+    }
+
+    .dropdown {
+        width: 100%;
+        display: inline-block;
+    }
+
+    .dropdown-btn {
+        width: 100%;
+        box-sizing: border-box;
+        text-align: center;
+    }
+
+    .dropdown-content {
+        width: 100%;
+        box-sizing: border-box;
     }
 
     .double-range {
