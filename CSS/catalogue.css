@@ -357,14 +357,14 @@
     }
 
     .filter-buttons {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 0.75rem;
+        display: flex;
+        flex-wrap: wrap;
         justify-content: center;
+        gap: 0.75rem;
     }
 
     .dropdown {
-        width: 100%;
+        width: 250px;
         display: inline-block;
     }
 
@@ -375,8 +375,9 @@
     }
 
     .dropdown-content {
-        width: 100%;
+        width: 250px;
         box-sizing: border-box;
+        left: 0;
     }
 
     .double-range {
