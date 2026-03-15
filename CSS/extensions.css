@@ -168,6 +168,19 @@ button.button-download {
 
     .extension-content{
         grid-template-columns: 1fr; 
-        gap: 40px; 
+        gap: 15px; 
+    }
+
+    .extension-column {
+        display: flex;
+        flex-direction: row; 
+        flex-wrap: wrap;    
+        justify-content: center;
+        gap: 0.5rem;
+    }
+
+    .card {
+        width: 75px;
+        height: 75px;
     }
 }
