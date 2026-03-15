@@ -154,10 +154,6 @@ button.button-printable, button.button-workshop, button.button-steam {
         background-color: rgba(0, 0, 0, 0.45);
     }
 
-    .button-with-price #ttprice {
-        font-size: 1rem;
-    }
-
     .first-subtitle, .second-subtitle {
         width: auto !important;
         max-width: none !important;
@@ -166,7 +162,7 @@ button.button-printable, button.button-workshop, button.button-steam {
 
     .button-with-price #ttprice {
         top: 2px; 
-        right: 2px;
+        right: 0px;
         font-size: 1rem;
     }
 }
