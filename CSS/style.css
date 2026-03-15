@@ -190,7 +190,7 @@ body {
     padding: 0.5rem 0.75rem;
     text-decoration: none;
     font-family: 'Lifecraft';
-    font-size: 0.95em;
+    font-size: 1.25em;
 }
 
 .menu .dropdown li a:hover {
@@ -399,7 +399,6 @@ h2 {
     } 
 
     .menu a {
-        font-size: clamp(0.85rem, 2.0vw, 1.05rem); 
         min-width: 0;
         padding: 0.4rem 0.6rem;
         white-space: nowrap; 
@@ -409,6 +408,11 @@ h2 {
 
     .menu .dropdown {
         min-width: 50px;
+        margin-top: 11px;
+    }
+
+    .menu .dropdown li a {
+    font-size: 0.85em;
     }
 
     .logo img {
