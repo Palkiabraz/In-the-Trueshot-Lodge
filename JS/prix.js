@@ -6,13 +6,11 @@ async function fetchTabletopPrice() {
 		const corsProxy = 'https://api.allorigins.win/raw?url=';
 		const response = await fetch(corsProxy + encodeURIComponent(steamUrl));
 		const data = await response.json();
-
 		const priceOverview = data['286160'].data.price_overview;
 
 		if (priceOverview) {
 			const finalPrice = (priceOverview.final / 100).toFixed(2);
 			const currency = priceOverview.currency;
-
 			document.getElementById('ttprice').textContent =
 				`${finalPrice} $`;
 

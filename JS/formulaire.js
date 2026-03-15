@@ -7,7 +7,6 @@ function submitForm() {
     const nom = document.getElementById("name").value;
     const mail = document.getElementById("email").value;
     const message = document.getElementById("message").value;
-
     const url = `https://docs.google.com/forms/d/e/${FORM_ID}/formResponse?${NOM}=${encodeURIComponent(nom)}&${MAIL}=${encodeURIComponent(mail)}&${MESSAGE}=${encodeURIComponent(message)}`;
 
     fetch(url, {
@@ -19,18 +18,13 @@ function submitForm() {
         console.error("Erreur lors de l'envoi du formulaire.");
     });
 };
-    
+
+// Ouvrir la boîte de contact
 document.addEventListener('DOMContentLoaded', function(){
 	var btn = document.getElementById('contact-btn');
 	var box = document.getElementById('contact');
-	setTimeout(function(){
-		btn.classList.add('show');
-		setTimeout(function(){
-			btn.style.transform = 'scale(1)';
-			box.classList.add('visible');
-			box.setAttribute('aria-hidden','false');
-		}, 420);
-	}, 200);
+	btn.classList.add('show');
+	btn.style.transform = 'scale(1)';
 
 	btn.addEventListener('click', function(){
 		if(box.classList.contains('visible')){

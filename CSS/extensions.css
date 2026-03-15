@@ -1,0 +1,146 @@
+.extension{
+    max-width: 1400px;
+    margin: 20px auto;
+    text-align: center;
+}
+
+.extension-header{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px; 
+    gap: 10px;
+}
+
+.extension-logo-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.extension-logo{
+    width: 60px;
+    height: auto;
+}
+
+.extension-title{
+    margin: 0;
+    font-size: 40px;
+}
+
+.extension-description{
+    font-size: 16px;
+    color: white;
+    text-align: center;
+    margin: 5px 0 0 0;
+}
+
+.extension-content{
+    display: grid;
+    grid-template-columns: repeat(3, auto) auto;
+    gap: 75px;
+    justify-content: center; 
+    align-items: start;
+    position: relative;
+}
+
+.extension-column {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 5px;
+    justify-items: center; 
+    align-items: center;
+}
+
+.extension-column > :nth-child(3n+4) {
+    grid-column: 1 / -1;
+    justify-self: center;
+}
+
+.extension-column img{
+    width: 100%;
+    border-radius: 10px;
+}
+
+.button-download{
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    width: auto;
+    height: auto;
+    border-radius: 8px;
+    transition: background-color 0.3s;
+    cursor: pointer;
+    flex: 0 0 auto;
+    padding : 1rem;
+}
+
+button.button-download {
+    background-color: transparent;
+    border: none;
+}
+
+.button-download a {
+    text-decoration: none;
+    padding: 0.6rem;
+    background-color: rgba(0, 0, 0, 0.45);
+    display: flex;
+    align-items: center;
+}
+
+.button-download {
+    color: #fff;
+    font-family: Arial;
+    font-size: 1.2rem;
+    text-align: center;
+    margin: auto;
+}
+
+.button-download img {
+    width: 50px; 
+    height: auto;
+    border: 1px solid #fff;
+}
+
+.button-download span {
+    font-size: 1.2rem;
+    color: #fff;
+    text-align: center; 
+}
+
+.button-download img:hover {
+    transform: scale(1.1);
+    transition: transform 0.3s; 
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    width: 75px;
+    height: 75px;
+}
+
+.card img {
+    width: 40px;
+    height: auto;
+    border-radius: 10px;
+    display: block;
+    margin: 0 auto;
+}
+
+.card-caption {
+    font-size: 12px;
+    color: white;
+    text-align: center;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-wrap: wrap;
+    word-wrap: break-word;
+    padding: 0 2px;
+}

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>In the Trueshot Lodge</title>
+	<link rel="stylesheet" href="./CSS/style.css">
+	<link rel="stylesheet" href="./CSS/extensions.css">
+	<link rel="icon" href="./Images/Logos/Icone.png" />
+</head>
+
+<body>
+	<header class="header">
+		<div class="header-top">
+			<div class="logo">
+				<img src="./Images/Logos/Principal.PNG" alt=" Main Logo" height="250 px">
+			</div>
+			<div class="header-controls">
+				<button id="flag-btn" class="flag-btn" aria-label="Passer en français" data-url="https://palkiabraz.github.io/Au-Pavillon-du-Traqueur/extensions-mineures.html">
+					<img src="./Images/Icones/Switch.jpg" alt="Passer en français" title="Passer en français">
+				</button>
+				<button id="bg-toggle" class="bg-toggle" aria-label="Change the background">
+					<img src="./Images/Icones/Daynight.jpg" alt="Change the background" title="Switch to Daymode or Nightmode">
+				</button>
+			</div>
+		</div>
+		<nav class="menu">
+			<ul>
+				<li><a href="home.html">Home</a></li>
+				<li><a href="presentation.html">Presentation</a></li>
+				<li><a href="card-library.html">Card Library</a></li>
+				<li class="menu-extensions">
+					<button id="extensions-btn" class="menu-btn" aria-expanded="false" aria-controls="extensions-dropdown">Expansions</button>
+					<ul id="extensions-dropdown" class="dropdown">
+						<li><a href="minor-expansions.html">Minor Expansions</a></li>
+					</ul>
+				</li>
+			</ul>
+		</nav>
+	</header>
+<section class="extension">
+	<div class="extension-header">
+    	<div class="extension-logo-title">
+        	<img src="./Images/Logos/Shadowlands.png" alt="Shadowlands" class="extension-logo">
+        	<h1 class="extension-title">Shadowlands</h1>
+    	</div>
+    	<p class="extension-description">The minor expansion "Shadowlands" adds eleven cards including three familiers, four weapons and four spells</p>
+	</div>
+    <div class="extension-content">
+        <div class="extension-column">
+			<div class="card">
+    			<img src="./Images/Icones/Shadowlands/Dromadaire.jpg">
+    			<p class="card-caption">Camel</p>
+			</div>			
+			<div class="card">
+    			<img src="./Images/Icones/Shadowlands/Coursier.jpg">
+    			<p class="card-caption">Courser</p>
+			</div>
+			<div class="card">
+    			<img src="./Images/Icones/Shadowlands/Mammouth.jpg">
+    			<p class="card-caption">Mammoth</p>
+			</div>
+        </div>
+        <div class="extension-column">
+			<div class="card">
+    			<img src="./Images/Icones/Shadowlands/Jotungeirr.jpg">
+    			<p class="card-caption">Jotungeirr</p>
+			</div>
+			<div class="card">
+    			<img src="./Images/Icones/Shadowlands/Rae_Shalare.jpg">
+    			<p class="card-caption">Rae'shalare</p>
+			</div>
+			<div class="card">
+    			<img src="./Images/Icones/Shadowlands/Pointe-d_ame.jpg">
+    			<p class="card-caption">Soulbarb</p>
+			</div>
+			<div class="card">
+    			<img src="./Images/Icones/Shadowlands/Zovastrum.jpg">
+    			<p class="card-caption">Zovastrum</p>
+			</div>			
+        </div>
+        <div class="extension-column">
+			<div class="card">
+    			<img src="./Images/Icones/Shadowlands/Chakram_de_mort.jpg">
+    			<p class="card-caption">Death Chakram</p>
+			</div>
+			<div class="card">
+    			<img src="./Images/Icones/Shadowlands/Tir_ecorcheur.jpg">
+    			<p class="card-caption">Flayed Shot</p>
+			</div>
+			<div class="card">
+    			<img src="./Images/Icones/Shadowlands/Fleche_resonnante.jpg">
+    			<p class="card-caption">Resonanting Arrow</p>
+			</div>
+			<div class="card">
+    			<img src="./Images/Icones/Shadowlands/Esprits_sauvages.jpg">
+    			<p class="card-caption">Wild Spirits</p>
+			</div>
+        </div>
+    </div>
+	<div class="extension-header">
+		<p class="extension-description">"Flayed Shot" is considered as an Shot spell
+			<br>"Resonating Arrow" is considered as an Arrow spell</p>
+	</div>
+	<button class="button-download">
+		<a href="./Fichiers/Shadowlands.zip" download class="button-download">
+			<img src="./Images/Icones/Extension.jpg" alt="Télécharger l'extension" title="Download the 'Shadowlands' expansion">
+			<span class="button-text">Want to invite the Shadowlands in the Trueshot Lodge ?
+				<br>Download the printable version of the expansion !
+			</span>
+		</a>
+	</button>
+</section>
+	<footer>
+		<div class="footer">
+			<p><i><u>In the Trueshot Lodge</u> is compliant with the general terms of use requested by
+					Blizzard Entertainment while respecting the intellectual property rights related to World
+					of Warcraft</i></p>
+			<p><i><u>In the Trueshot Lodge</u> is registered in the <u><a href="https://atelier197.carrd.co/"
+					target="_blank" rel="noopener noreferrer">Atelier 197</a> initiative</i></u></p>
+		</div>
+	</footer>
+	<button id="contact-btn" aria-label="Contact">
+		<img id="contact-icon" src="./Images/Icones/Contact.jpg" alt="Contact" title="Display the Contact Form" onerror="this.onerror=null;this.src='./Images/Icones/Contact.jpg';">
+	</button>
+	<form id="contact" aria-hidden="true">
+		<h3>Want to contact me ? </h3>
+		<label for="name">Name or Nickname</label>
+		<input type="text" id="name" name="name" required>
+		<label for="email">Mail or Discord</label>
+		<input type="email" id="email" name="email" required>
+		<label for="message">Message</label>
+		<textarea id="message" name="message" rows="5" required></textarea>
+		<div class="submit-row">
+			<button type="button" onclick="submitForm()">Send</button>
+		</div>
+	</form>
+	<script src="./JS/daynight.js"></script>
+	<script src="./JS/switch.js"></script>
+	<script src="./JS/formulaire.js"></script>
+	<script src="./JS/extensions.js"></script>
+</body>
+</html>

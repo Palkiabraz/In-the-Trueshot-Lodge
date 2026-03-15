@@ -1,10 +1,16 @@
-// Variables de sélection globales
+// Variables de filtres
+let selectedExpansion = 'toutes';
 let selectedCategory = 'tous';
 let selectedType = 'tous';
 let selectedRarity = 'tous';
 let searchValue = '';
 let attackMin = 1, attackMax = 6;
 let lifeMin = 1, lifeMax = 6;
+
+// Récupération des éléments HTML & CSS 
+const expansionWrap = document.getElementById('expansion-dropdown-wrap');
+const expansionBtn = document.getElementById('expansion-btn');
+const expansionMenu = document.getElementById('expansion-dropdown');
 const categoryWrap = document.getElementById('category-dropdown-wrap');
 const categoryBtn = document.getElementById('category-btn');
 const categoryMenu = document.getElementById('category-dropdown');
@@ -14,8 +20,16 @@ const typeMenu = document.getElementById('type-dropdown');
 const rarityWrap = document.getElementById('rarity-dropdown-wrap');
 const rarityBtn = document.getElementById('rarity-btn');
 const rarityMenu = document.getElementById('rarity-dropdown');
+
+// Filtres "Dropdown"
+expansionBtn.addEventListener('click', (e) => {
+	e.stopPropagation();
+	expansionMenu.classList.toggle('active');
+	categoryMenu.classList.remove('active');
+	typeMenu.classList.remove('active');
+	rarityMenu.classList.remove('active');
+});
 categoryBtn.addEventListener('click', (e) => {
-    // Ouvre/ferme le menu catégorie et ferme les autres menus
     e.stopPropagation();
     categoryMenu.classList.toggle('active');
     typeMenu.classList.remove('active');
@@ -33,13 +47,29 @@ rarityBtn.addEventListener('click', (e) => {
     categoryMenu.classList.remove('active');
     typeMenu.classList.remove('active');
 });
+
+// Choix d'un option de filtrage
+document.querySelectorAll('#expansion-dropdown a').forEach(a => {
+	a.addEventListener('click', (e) => {
+		e.preventDefault();
+		selectedExpansion = a.dataset.expansion;
+		const label = a.textContent;
+
+		expansionBtn.textContent =
+			selectedExpansion === 'toutes'
+			? 'Set of Cards'
+			: `${label}`;
+
+		expansionMenu.classList.remove('active');
+		applyFilters();
+	});
+});
 document.querySelectorAll('#category-dropdown a').forEach(a => {
     a.addEventListener('click', (e) => {
         e.preventDefault();
         selectedCategory = a.dataset.category;
         const label = a.textContent;
-        // Met à jour le texte du bouton et applique les filtres
-        categoryBtn.textContent = selectedCategory === 'tous' ? 'Catégorie de cartes' : `${label}`;
+        categoryBtn.textContent = selectedCategory === 'tous' ? 'Card Category' : `${label}`;
         categoryMenu.classList.remove('active');
         applyFilters();
     });
@@ -49,7 +79,7 @@ document.querySelectorAll('#type-dropdown a').forEach(a => {
         e.preventDefault();
         selectedType = a.dataset.type;
         const label = a.textContent;
-        typeBtn.textContent = selectedType === 'tous' ? 'Type de familiers' : `${label}`;
+        typeBtn.textContent = selectedType === 'tous' ? 'Pet Type' : `${label}`;
         typeMenu.classList.remove('active');
         applyFilters();
     });
@@ -59,17 +89,21 @@ document.querySelectorAll('#rarity-dropdown a').forEach(a => {
         e.preventDefault();
         selectedRarity = a.dataset.rarity;
         const label = a.textContent;
-        rarityBtn.textContent = selectedRarity === 'tous' ? 'Rareté du familier' : `${label}`;
+        rarityBtn.textContent = selectedRarity === 'tous' ? 'Pet Rarity' : `${label}`;
         rarityMenu.classList.remove('active');
         applyFilters();
     });
 });
+
+// Fermeture automatique du menu "Dropdown" 
 document.addEventListener('click', (e) => {
-    // Ferme les menus si l'utilisateur clique en dehors
     if (!categoryWrap.contains(e.target)) categoryMenu.classList.remove('active');
     if (!typeWrap.contains(e.target)) typeMenu.classList.remove('active');
     if (!rarityWrap.contains(e.target)) rarityMenu.classList.remove('active');
+    if (!expansionWrap.contains(e.target)) expansionMenu.classList.remove('active');
 });
+
+// Filtres "Slider"
 const attackMinInput = document.getElementById('attack-min');
 const attackMaxInput = document.getElementById('attack-max');
 const attackMinVal = document.getElementById('attack-min-val');
@@ -87,9 +121,6 @@ function setDoubleRangeBackground(wrapper, minV, maxV, minPossible = 1, maxPossi
     wrapper.style.setProperty('--left', left + '%');
     wrapper.style.setProperty('--right', right + '%');
 }
-
-// Gestion des inputs de plage (double slider)
-// On met à jour les valeurs min/max et l'affichage (et on applique le filtre)
 
 if (attackMinInput && attackMaxInput) {
     attackMinInput.addEventListener('input', (e) => {
@@ -286,7 +317,8 @@ function parseAttackCondition(condition) {
     if (!m) return null;
     return { op: m[1] || '=', val: parseInt(m[2], 10) };
 }
-// Normalise une chaîne (suppression des accents et mise en minuscule)
+
+// Supprime les accents et met en minuscule 
 function normalizeStr(s) {
     if (!s) return '';
     try {
@@ -295,35 +327,22 @@ function normalizeStr(s) {
         return s.replace(/[\u0300-\u036f]/g, '').toLowerCase();
     }
 }
+
+// Mots-clés supplémentaires
 const extraKeywords = {
     'hound': 'arrow shot',
     'bear': 'trap',
     'fox': 'aspect',
     'rodent': 'bite sting'
 };
-function checkAttackCondition(cardAttack, conditionStr) {
-    // Ancienne fonction pour conditions textuelles comme ">= 3".
-    // Elle est conservée pour compatibilité mais n'est plus utilisée
-    // par les sliders numériques (attaque/ vie utilisent maintenant des plages).
-    if (!conditionStr) return true;
-    const cond = parseAttackCondition(conditionStr);
-    if (!cond) return false;
-    const atk = Number(cardAttack);
-    if (isNaN(atk)) return false;
-    switch (cond.op) {
-        case '<': return atk < cond.val;
-        case '<=': return atk <= cond.val;
-        case '>': return atk > cond.val;
-        case '>=': return atk >= cond.val;
-        case '=': return atk === cond.val;
-        default: return atk === cond.val;
-    }
-}
+
+// Bouton "Recherche"
 function filterCards(value) {
     searchValue = value || '';
     applyFilters();
 }
-// Fonction principale qui applique tous les filtres et met à jour l'affichage
+
+// Fonction de recherche et d'affichage des cartes
 function applyFilters() {
     const familiersCatalogue = document.getElementById("familiers-catalogue");
     const armesCatalogue = document.getElementById("armes-catalogue");
@@ -376,11 +395,12 @@ function applyFilters() {
         sortsTitle.style.display = "block";
     }
     let totalVisible = 0;
+
+    // Bloc "Familiers"
     if (familiersCatalogue.style.display !== "none") {
         const cards = familiersCatalogue.querySelectorAll(".catalogue-card");
         let visible = 0;
         cards.forEach(img => {
-            // Pour chaque carte : vérifier correspondance recherche/ type / rareté / attaque / vie
             const normSearch = normalizeStr(searchValue);
             const cardNameNorm = normalizeStr(img.alt);
             const extra = extraKeywords[cardNameNorm] || img.dataset.keywords || '';
@@ -397,7 +417,11 @@ function applyFilters() {
                 const r = (img.dataset.rarity || '').toLowerCase();
                 rarityMatch = r === selectedRarity;
             }
-            // Utiliser getAttribute pour récupérer les attributs HTML bruts
+            let expansionMatch = true;
+            if (selectedExpansion !== 'toutes') {
+                const e = (img.dataset.expansion || '').toLowerCase();
+                expansionMatch = e === selectedExpansion;
+            }
             const atkAttr = img.getAttribute('data-attack');
             const atk = parseInt((atkAttr || '').trim(), 10);
             let attackMatch;
@@ -414,8 +438,7 @@ function applyFilters() {
             } else {
                 lifeMatch = (lp >= lifeMin && lp <= lifeMax);
             }
-            const show = nameMatch && typeMatch && rarityMatch && attackMatch && lifeMatch;
-            // if image is wrapped in .card-wrapper, hide the wrapper instead of the image
+            const show = nameMatch && typeMatch && rarityMatch && expansionMatch && attackMatch && lifeMatch;
             const wrapper = img.closest('.card-wrapper');
             if (wrapper) {
                 wrapper.style.display = show ? 'flex' : 'none';
@@ -428,6 +451,8 @@ function applyFilters() {
         familiersCatalogue.style.display = visible > 0 ? "grid" : "none";
         totalVisible += visible;
     }
+
+    // Bloc "Armes"
     if (armesCatalogue.style.display !== "none") {
         const cards = armesCatalogue.querySelectorAll(".catalogue-card");
         let visible = 0;
@@ -452,7 +477,12 @@ function applyFilters() {
             } else {
                 lifeMatch = (lp >= lifeMin && lp <= lifeMax);
             }
-            const show = nameMatch && attackMatch && lifeMatch;
+            let expansionMatch = true;
+            if (selectedExpansion !== 'toutes') {
+                const e = (img.dataset.expansion || '').toLowerCase();
+                expansionMatch = e === selectedExpansion;
+            }
+            const show = nameMatch && attackMatch && lifeMatch && expansionMatch;
             const wrapper = img.closest('.card-wrapper');
             if (wrapper) {
                 wrapper.style.display = show ? 'flex' : 'none';
@@ -465,32 +495,49 @@ function applyFilters() {
         armesCatalogue.style.display = visible > 0 ? "grid" : "none";
         totalVisible += visible;
     }
-    if (sortsCatalogue.style.display !== "none") {
+
+    // Bloc "Sorts"
+    if (sortsCatalogue.style.display !== "none") { 
         const cards = sortsCatalogue.querySelectorAll(".catalogue-card");
         let visible = 0;
+
         cards.forEach(img => {
             const normSearch = normalizeStr(searchValue);
             const cardNameNorm = normalizeStr(img.alt);
             const extra = extraKeywords[cardNameNorm] || img.dataset.keywords || '';
-            const show = cardNameNorm.includes(normSearch) || normalizeStr(extra).includes(normSearch);
+
+            let expansionMatch = true;
+            if (selectedExpansion !== 'toutes') {
+                const e = (img.dataset.expansion || '').toLowerCase();
+                expansionMatch = e === selectedExpansion;
+            }
+
+            const show =
+                expansionMatch &&
+                (cardNameNorm.includes(normSearch) || normalizeStr(extra).includes(normSearch));
+
             const wrapper = img.closest('.card-wrapper');
+
             if (wrapper) {
-                wrapper.style.display = show ? 'flex' : 'none';
+             wrapper.style.display = show ? 'flex' : 'none';
             } else {
                 img.style.display = show ? 'block' : 'none';
             }
+
             if (show) visible++;
         });
-        sortsTitle.style.display = visible > 0 ? "block" : "none";
-        sortsCatalogue.style.display = visible > 0 ? "grid" : "none";
-        totalVisible += visible;
-    }
+    sortsTitle.style.display = visible > 0 ? "block" : "none";
+    sortsCatalogue.style.display = visible > 0 ? "grid" : "none";
+    totalVisible += visible;
+}
+
+// Compteur de résultats
     const searchResults = document.getElementById("search-results");
-    searchResults.textContent = totalVisible === 1 ? "1 card found using search filters " : `${totalVisible} cards found using search filters`;
+    searchResults.textContent = totalVisible === 1 ? "1 card found using the search filters" : `${totalVisible} cards found using the search filters`;
 }
 applyFilters();
 
-// --- Zoom des cartes + overlay ---
+// Fonction de zoom et de légende des cartes
 (function(){
     let current = null;
 
@@ -523,15 +570,18 @@ applyFilters();
         content.className = 'overlay-content';
         content.appendChild(clone);
 
-        // Ajouter la légende dans l'overlay (visible seulement lors du zoom)
         const extension = getExtensionForImage(img);
         const cap = document.createElement('div');
         cap.className = 'card-caption';
-        // Texte spécifique pour l'ensemble Fondamental
-        if (typeof extension === 'string' && extension.toLowerCase() === 'fondamental') {
+
+        // Affiche une légende en fonction de l'extension
+        const expansion = img.dataset.expansion || '';
+
+        if (expansion === 'core') {
             cap.textContent = "Available in the base game";
         } else {
-            cap.textContent = extension;
+            const formattedExpansion = expansion.charAt(0).toUpperCase() + expansion.slice(1).toLowerCase();
+            cap.textContent = "Available in the " + formattedExpansion + " Expansion";
         }
         content.appendChild(cap);
 
@@ -557,7 +607,6 @@ applyFilters();
         current = null;
     }
 
-    // Ajoute une petite légende indiquant l'extension sous chaque carte
     function ensureCaptions(root = document) {
         root.querySelectorAll('.catalogue-card').forEach(img => {
             const parent = img.parentElement;
@@ -576,16 +625,18 @@ applyFilters();
             }
             const cap = document.createElement('div');
             cap.className = 'card-caption';
-            if (typeof extension === 'string' && extension.toLowerCase() === 'fondamental') {
+
+            const expansion = img.dataset.expansion || '';
+            if (expansion === 'core') {
                 cap.textContent = "Available in the base game";
             } else {
-                cap.textContent = extension;
+                const formattedExpansion = expansion.charAt(0).toUpperCase() + expansion.slice(1).toLowerCase();
+                cap.textContent = "Available in the " + formattedExpansion + " Expansion";
             }
             wrapper.appendChild(cap);
         });
     }
 
-    // Attacher événements à toutes les cartes (y compris celles ajoutées dynamiquement)
     function attachHandlers(root=document){
         root.querySelectorAll('.catalogue-card').forEach(img => {
             if (img.__zoomBound) return;

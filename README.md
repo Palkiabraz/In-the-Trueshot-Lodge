@@ -2,3 +2,4 @@
 
 ### JOURNEY DONE
 <ins>February 22th 2026 :</ins> (English) Release of the game
+<ins>15 Mars 2026 :</ins> Release of the "Shadowlands" minor expansion
