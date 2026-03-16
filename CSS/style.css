@@ -469,6 +469,9 @@ h2 {
     }
 
     #contact-btn {
+        position: fixed;
+        right: 36px;
+        bottom: 36px;
         height: 36px;
         width: auto;
     }
