@@ -390,6 +390,16 @@ h2 {
     flex-wrap: nowrap;
     }
 
+.notification {
+    opacity: 1;
+    transition: opacity 1.0s ease;
+    color:white;
+}
+
+.notification.fade-out {
+    opacity: 0;
+}
+
 @media (max-width: 600px) {
     .menu {
         -webkit-overflow-scrolling: touch;

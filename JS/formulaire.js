@@ -2,12 +2,30 @@ const FORM_ID = "1FAIpQLSdXwcM8cOims2vNHzXqNmp7PqinrsjK9PZX37VNZY0EGYtTOg";
 const NOM = "entry.2005620554";
 const MAIL = "entry.120579310";
 const MESSAGE = "entry.908947694";
+const audio = new Audio('../Sons/Envoi.mp3');
+
 
 function submitForm() {
     const nom = document.getElementById("name").value;
     const mail = document.getElementById("email").value;
     const message = document.getElementById("message").value;
     const url = `https://docs.google.com/forms/d/e/${FORM_ID}/formResponse?${NOM}=${encodeURIComponent(nom)}&${MAIL}=${encodeURIComponent(mail)}&${MESSAGE}=${encodeURIComponent(message)}`;
+	audio.play();
+
+	const notifDiv = document.createElement('div');
+	notifDiv.classList.add('notification');
+	notifDiv.textContent = "Message sent !";
+	notifDiv.style.position = 'fixed';
+	notifDiv.style.bottom = '480px';
+	notifDiv.style.right = '168px';
+	document.body.appendChild(notifDiv);
+
+	setTimeout(() => {
+		notifDiv.classList.add('fade-out');
+		notifDiv.addEventListener('transitionend', () => {
+			notifDiv.remove();
+		});
+	}, 1500);
 
     fetch(url, {
         method: "POST",
@@ -15,7 +33,7 @@ function submitForm() {
     }).then(() => {
         document.getElementById("contact").reset();
     }).catch(() => {
-        console.error("Erreur lors de l'envoi du formulaire.");
+        console.error("Error submitting form.");
     });
 };
 
