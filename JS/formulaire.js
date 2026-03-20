@@ -2,7 +2,7 @@ const FORM_ID = "1FAIpQLSdXwcM8cOims2vNHzXqNmp7PqinrsjK9PZX37VNZY0EGYtTOg";
 const NOM = "entry.2005620554";
 const MAIL = "entry.120579310";
 const MESSAGE = "entry.908947694";
-const audio = new Audio('../Sons/Envoi.mp3');
+const audio = document.getElementById('envoi-son');
 
 
 function submitForm() {
