@@ -137,7 +137,7 @@ button.button-rules {
 }
 
 .type-text {
-    font-size: 0.1rem; 
+    font-size: 0.75rem !important; 
     color: #fff; 
     margin-top: 0rem;
 }
@@ -248,8 +248,7 @@ button.button-rules {
     z-index: 30;
     width: auto;
     height: 300px;
-    margin-left: 0.55rem;
-    
+    margin-left: 0.55rem;   
 }
 
 .sort-text {

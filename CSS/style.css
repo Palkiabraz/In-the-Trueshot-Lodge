@@ -170,6 +170,8 @@ body {
 }
 
 .menu .dropdown {
+    display: flex;
+    flex-direction: column;
     position: absolute;
     top: 100%;
     margin-top: 8px; 
@@ -484,8 +486,8 @@ h2 {
 
     #contact-btn {
         position: fixed;
-        right: 36px;
-        bottom: 36px;
+        right: 24px;
+        bottom: 24px;
         height: 36px;
         width: auto;
     }
