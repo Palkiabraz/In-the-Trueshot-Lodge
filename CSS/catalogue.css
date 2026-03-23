@@ -18,7 +18,7 @@
     transform: scale(1.1); 
 }
 
-.catalogue-sorts {
+.catalogue-sorts, .catalogue-nourriture {
     display: grid; 
     grid-template-columns: repeat(4, 1fr);
     gap: 1rem; 
@@ -334,7 +334,7 @@
 }
 
 @media (max-width: 600px) {
-    .catalogue, .catalogue-sorts {
+    .catalogue, .catalogue-sorts, .catalogue-nourriture {
         margin: 0 1rem 1.5rem; 
         max-width: none;
         gap: 0.75rem;
