@@ -23,11 +23,6 @@ const typeMenu = $id('type-dropdown');
 const rarityMenu = $id('rarity-dropdown');
 
 // Helpers généraux
-function setTextOrDefault(btn, selected, def) {
-    if (!btn) return;
-    btn.textContent = selected === 'toutes' || selected === 'tous' ? def : btn.dataset && btn.dataset.label ? btn.dataset.label : btn.textContent;
-}
-
 function setBtnTextFromAnchor(btn, selected, defaultLabel, label) {
     if (!btn) return;
     btn.textContent = (selected === 'toutes' || selected === 'tous') ? defaultLabel : label;
@@ -331,9 +326,9 @@ applyFilters();
 
     // Noms d'extensions
     const expansionNames = {
-        'core': 'Core',
+        'core': 'Base Game',
         'shadowlands': 'Shadowlands',
-        'rassasie_et_hydrate': 'Rassasié et Hydraté'
+        'dire_diets': 'Dire Diets'
     };
 
     // Légendes d'extensions
@@ -343,12 +338,13 @@ applyFilters();
         'dire_diets': 'Available in the major expansion "Dire Diets"'
     };
 
+    // Génère une légende d'extension à partir du nom de l'extension, en utilisant les légendes prédéfinies si disponibles
     function expansionCaptionFallback(expansion){
         if (!expansion) return '';
         if (expansion === 'core') return 'Available in the base game';
-        if (expansionNames[expansion]) return 'Available in the ' + expansionNames[expansion];
+        if (expansionNames[expansion]) return 'Available in the expansion ' + expansionNames[expansion];
         const formattedExpansion = expansion.replace(/_/g, ' ').split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
-        return 'Available in the ' + formattedExpansion;
+        return 'Available in the expansion ' + formattedExpansion;
     }
 
     function captionForImage(img){
@@ -389,7 +385,6 @@ applyFilters();
         content.className = 'overlay-content';
         content.appendChild(clone);
 
-        const extension = getExtensionForImage(img);
         const cap = document.createElement('div');
         cap.className = 'card-caption';
 
