@@ -279,6 +279,8 @@
 }
 .catalogue-overlay.active {
     display: flex;
+    background: rgba(0,0,0,0.65);
+    transition: background 200ms ease;
 }
 .catalogue-overlay .zoomed {
     max-width: 80vw;

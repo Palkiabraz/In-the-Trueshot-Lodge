@@ -7,112 +7,126 @@ let searchValue = '';
 let attackMin = 1, attackMax = 6;
 let lifeMin = 1, lifeMax = 6;
 
-// Récupération des éléments HTML & CSS 
-const expansionWrap = document.getElementById('expansion-dropdown-wrap');
-const expansionBtn = document.getElementById('expansion-btn');
-const expansionMenu = document.getElementById('expansion-dropdown');
-const categoryWrap = document.getElementById('category-dropdown-wrap');
-const categoryBtn = document.getElementById('category-btn');
-const categoryMenu = document.getElementById('category-dropdown');
-const typeWrap = document.getElementById('type-dropdown-wrap');
-const typeBtn = document.getElementById('type-btn');
-const typeMenu = document.getElementById('type-dropdown');	
-const rarityWrap = document.getElementById('rarity-dropdown-wrap');
-const rarityBtn = document.getElementById('rarity-btn');
-const rarityMenu = document.getElementById('rarity-dropdown');
+// Récupération d'éléments utilitaires
+const $id = id => document.getElementById(id);
+const expansionWrap = $id('expansion-dropdown-wrap');
+const categoryWrap = $id('category-dropdown-wrap');
+const typeWrap = $id('type-dropdown-wrap');
+const rarityWrap = $id('rarity-dropdown-wrap');
+const expansionBtn = $id('expansion-btn');
+const categoryBtn = $id('category-btn');
+const typeBtn = $id('type-btn');
+const rarityBtn = $id('rarity-btn');
+const expansionMenu = $id('expansion-dropdown');
+const categoryMenu = $id('category-dropdown');
+const typeMenu = $id('type-dropdown');
+const rarityMenu = $id('rarity-dropdown');
 
-// Filtres "Dropdown"
-expansionBtn.addEventListener('click', (e) => {
-	e.stopPropagation();
-	expansionMenu.classList.toggle('active');
-	categoryMenu.classList.remove('active');
-	typeMenu.classList.remove('active');
-	rarityMenu.classList.remove('active');
-});
-categoryBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    categoryMenu.classList.toggle('active');
-    typeMenu.classList.remove('active');
-    rarityMenu.classList.remove('active');
-});
-typeBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    typeMenu.classList.toggle('active');
-    categoryMenu.classList.remove('active');
-    rarityMenu.classList.remove('active');
-});
-rarityBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    rarityMenu.classList.toggle('active');
-    categoryMenu.classList.remove('active');
-    typeMenu.classList.remove('active');
-});
+// Helpers généraux
+function setTextOrDefault(btn, selected, def) {
+    if (!btn) return;
+    btn.textContent = selected === 'toutes' || selected === 'tous' ? def : btn.dataset && btn.dataset.label ? btn.dataset.label : btn.textContent;
+}
 
-// Choix d'un option de filtrage
-document.querySelectorAll('#expansion-dropdown a').forEach(a => {
-	a.addEventListener('click', (e) => {
-		e.preventDefault();
-		selectedExpansion = a.dataset.expansion;
-		const label = a.textContent;
+function setBtnTextFromAnchor(btn, selected, defaultLabel, label) {
+    if (!btn) return;
+    btn.textContent = (selected === 'toutes' || selected === 'tous') ? defaultLabel : label;
+}
 
-		expansionBtn.textContent =
-			selectedExpansion === 'toutes'
-			? 'Set of Cards'
-			: `${label}`;
+function setDisplay(el, show, displayIfTrue = 'grid') {
+    if (!el) return;
+    el.style.display = show ? displayIfTrue : 'none';
+}
 
-		expansionMenu.classList.remove('active');
-		applyFilters();
-	});
-});
-document.querySelectorAll('#category-dropdown a').forEach(a => {
-    a.addEventListener('click', (e) => {
-        e.preventDefault();
-        selectedCategory = a.dataset.category;
-        const label = a.textContent;
-        categoryBtn.textContent = selectedCategory === 'tous' ? 'Card Category' : `${label}`;
-        categoryMenu.classList.remove('active');
-        applyFilters();
+function setCardDisplay(img, show) {
+    if (!img) return;
+    const wrapper = img.closest('.card-wrapper');
+    if (wrapper) wrapper.style.display = show ? 'flex' : 'none';
+    else img.style.display = show ? 'block' : 'none';
+}
+
+function norm(s){ return normalizeStr(s); }
+
+function getNumAttr(img, attr){
+    const v = img.getAttribute(attr);
+    const n = parseInt((v||'').trim(), 10);
+    return isNaN(n) ? null : n;
+}
+
+function matchesRangeImg(img, attr, min, max){
+    const v = getNumAttr(img, attr);
+    return v === null ? (min === 1 && max === 6) : (v >= min && v <= max);
+}
+
+function matchesExpansion(img, selectedExpansion){
+    if (!selectedExpansion || selectedExpansion === 'toutes') return true;
+    const e = (img.dataset.expansion || '').toLowerCase();
+    return e === selectedExpansion;
+}
+
+// Dropdowns: centralise l'attachement et la fermeture
+const allMenus = [expansionMenu, categoryMenu, typeMenu, rarityMenu].filter(Boolean);
+const wraps = [expansionWrap, categoryWrap, typeWrap, rarityWrap];
+
+function setupDropdown(btn, menu){
+    if (!btn || !menu) return;
+    btn.addEventListener('click', e => {
+        e.stopPropagation();
+        menu.classList.toggle('active');
+        allMenus.forEach(m => { if (m !== menu) m.classList.remove('active'); });
     });
-});
-document.querySelectorAll('#type-dropdown a').forEach(a => {
-    a.addEventListener('click', (e) => {
-        e.preventDefault();
-        selectedType = a.dataset.type;
-        const label = a.textContent;
-        typeBtn.textContent = selectedType === 'tous' ? 'Pet Type' : `${label}`;
-        typeMenu.classList.remove('active');
-        applyFilters();
-    });
-});
-document.querySelectorAll('#rarity-dropdown a').forEach(a => {
-    a.addEventListener('click', (e) => {
-        e.preventDefault();
-        selectedRarity = a.dataset.rarity;
-        const label = a.textContent;
-        rarityBtn.textContent = selectedRarity === 'tous' ? 'Pet Rarity' : `${label}`;
-        rarityMenu.classList.remove('active');
-        applyFilters();
+}
+
+setupDropdown(expansionBtn, expansionMenu);
+setupDropdown(categoryBtn, categoryMenu);
+setupDropdown(typeBtn, typeMenu);
+setupDropdown(rarityBtn, rarityMenu);
+
+// Fermer les menus si clic en dehors
+document.addEventListener('click', e => {
+    allMenus.forEach((m, i) => {
+        const w = wraps[i];
+        if (!w || !m) return;
+        if (!w.contains(e.target)) m.classList.remove('active');
     });
 });
 
-// Fermeture automatique du menu "Dropdown" 
-document.addEventListener('click', (e) => {
-    if (!categoryWrap.contains(e.target)) categoryMenu.classList.remove('active');
-    if (!typeWrap.contains(e.target)) typeMenu.classList.remove('active');
-    if (!rarityWrap.contains(e.target)) rarityMenu.classList.remove('active');
-    if (!expansionWrap.contains(e.target)) expansionMenu.classList.remove('active');
-});
+function attachOptions(selector, setter, btn, defaultLabel){
+    document.querySelectorAll(selector).forEach(a => {
+        a.addEventListener('click', e => {
+            e.preventDefault();
+            const dataKeys = Object.keys(a.dataset);
+            const key = dataKeys[0];
+            const value = key ? a.dataset[key] : undefined;
+            setter(value);
+            const label = a.textContent;
+            setBtnTextFromAnchor(btn, value, defaultLabel, label);
+            const menu = a.closest('.dropdown');
+            if (menu) menu.classList.remove('active');
+            applyFilters();
+        });
+    });
+}
 
-// Filtres "Slider"
-const attackMinInput = document.getElementById('attack-min');
-const attackMaxInput = document.getElementById('attack-max');
-const attackMinVal = document.getElementById('attack-min-val');
-const attackMaxVal = document.getElementById('attack-max-val');
+function setSelectedExpansion(v){ selectedExpansion = v || 'toutes'; }
+function setSelectedCategory(v){ selectedCategory = v || 'tous'; }
+function setSelectedType(v){ selectedType = v || 'tous'; }
+function setSelectedRarity(v){ selectedRarity = v || 'tous'; }
 
-const lifeMinInput = document.getElementById('life-min');
-const lifeMaxInput = document.getElementById('life-max');
-const lifeMinVal = document.getElementById('life-min-val');
-const lifeMaxVal = document.getElementById('life-max-val');
+attachOptions('#expansion-dropdown a', setSelectedExpansion, expansionBtn, 'Ensemble de cartes');
+attachOptions('#category-dropdown a', setSelectedCategory, categoryBtn, 'Catégorie de cartes');
+attachOptions('#type-dropdown a', setSelectedType, typeBtn, 'Type de familiers');
+attachOptions('#rarity-dropdown a', setSelectedRarity, rarityBtn, 'Rareté du familier');
+
+// Filtres "Slider" factorisés
+const attackMinInput = $id('attack-min');
+const attackMaxInput = $id('attack-max');
+const attackMinVal = $id('attack-min-val');
+const attackMaxVal = $id('attack-max-val');
+const lifeMinInput = $id('life-min');
+const lifeMaxInput = $id('life-max');
+const lifeMinVal = $id('life-min-val');
+const lifeMaxVal = $id('life-max-val');
 
 function setDoubleRangeBackground(wrapper, minV, maxV, minPossible = 1, maxPossible = 6) {
     if (!wrapper) return;
@@ -122,201 +136,77 @@ function setDoubleRangeBackground(wrapper, minV, maxV, minPossible = 1, maxPossi
     wrapper.style.setProperty('--right', right + '%');
 }
 
-if (attackMinInput && attackMaxInput) {
-    attackMinInput.addEventListener('input', (e) => {
-        attackMin = parseInt(e.target.value, 10) || 1;
-        if (attackMin > attackMax) { attackMax = attackMin; attackMaxInput.value = attackMax; attackMaxVal.textContent = attackMax; }
-        attackMinVal.textContent = attackMin;
-        setDoubleRangeBackground(attackMinInput.parentElement, attackMin, attackMax);
+function attachDoubleRange(minInput, maxInput, minValEl, maxValEl, getVals, setVals){
+    if (!minInput || !maxInput) return;
+    const wrapper = minInput.parentElement;
+    function updateDisplay(){
+        const {min, max} = getVals();
+        if (minValEl) minValEl.textContent = min;
+        if (maxValEl) maxValEl.textContent = max;
+        setDoubleRangeBackground(wrapper, min, max);
+    }
+    minInput.addEventListener('input', e => {
+        let v = parseInt(e.target.value, 10) || 1;
+        const {min: curMin, max: curMax} = getVals();
+        if (v > curMax) v = curMax;
+        setVals({min: v, max: curMax});
+        updateDisplay();
         applyFilters();
     });
-    attackMaxInput.addEventListener('input', (e) => {
-        attackMax = parseInt(e.target.value, 10) || 6;
-        if (attackMax < attackMin) { attackMin = attackMax; attackMinInput.value = attackMin; attackMinVal.textContent = attackMin; }
-        attackMaxVal.textContent = attackMax;
-        setDoubleRangeBackground(attackMinInput.parentElement, attackMin, attackMax);
+    maxInput.addEventListener('input', e => {
+        let v = parseInt(e.target.value, 10) || 6;
+        const {min: curMin, max: curMax} = getVals();
+        if (v < curMin) v = curMin;
+        setVals({min: curMin, max: v});
+        updateDisplay();
         applyFilters();
     });
-}
 
-if (lifeMinInput && lifeMaxInput) {
-    lifeMinInput.addEventListener('input', (e) => {
-        lifeMin = parseInt(e.target.value, 10) || 1;
-        if (lifeMin > lifeMax) { lifeMax = lifeMin; lifeMaxInput.value = lifeMax; lifeMaxVal.textContent = lifeMax; }
-        lifeMinVal.textContent = lifeMin;
-        setDoubleRangeBackground(lifeMinInput.parentElement, lifeMin, lifeMax);
-        applyFilters();
-    });
-    lifeMaxInput.addEventListener('input', (e) => {
-        lifeMax = parseInt(e.target.value, 10) || 6;
-        if (lifeMax < lifeMin) { lifeMin = lifeMax; lifeMinInput.value = lifeMin; lifeMinVal.textContent = lifeMin; }
-        lifeMaxVal.textContent = lifeMax;
-        setDoubleRangeBackground(lifeMinInput.parentElement, lifeMin, lifeMax);
-        applyFilters();
-    });
-}
+    minInput.classList.remove('top');
+    maxInput.classList.add('top');
+    setDoubleRangeBackground(wrapper, getVals().min, getVals().max);
 
-if (attackMinInput && attackMaxInput) {
-    attackMinInput.classList.remove('top');
-    attackMaxInput.classList.add('top');
-    setDoubleRangeBackground(attackMinInput.parentElement, attackMin, attackMax);
-}
-if (lifeMinInput && lifeMaxInput) {
-    lifeMinInput.classList.remove('top');
-    lifeMaxInput.classList.add('top');
-    setDoubleRangeBackground(lifeMinInput.parentElement, lifeMin, lifeMax);
-}
-
-if (attackMinInput && attackMaxInput) {
-    const attackWrapper = attackMinInput.parentElement;
-    attackWrapper.addEventListener('pointerdown', (e) => {
-        const rect = attackWrapper.getBoundingClientRect();
-        const clickX = e.clientX;
-        const leftPos = rect.left + ((attackMin - 1) / (6 - 1)) * rect.width;
-        const rightPos = rect.left + ((attackMax - 1) / (6 - 1)) * rect.width;
-        const mid = (leftPos + rightPos) / 2;
-        const target = clickX < mid ? attackMinInput : attackMaxInput;
-        attackMinInput.classList.remove('top');
-        attackMaxInput.classList.remove('top');
-        target.classList.add('top');
-    }, { capture: true });
-}
-if (lifeMinInput && lifeMaxInput) {
-    const lifeWrapper = lifeMinInput.parentElement;
-    lifeWrapper.addEventListener('pointerdown', (e) => {
-        const rect = lifeWrapper.getBoundingClientRect();
-        const clickX = e.clientX;
-        const leftPos = rect.left + ((lifeMin - 1) / (6 - 1)) * rect.width;
-        const rightPos = rect.left + ((lifeMax - 1) / (6 - 1)) * rect.width;
-        const mid = (leftPos + rightPos) / 2;
-        const target = clickX < mid ? lifeMinInput : lifeMaxInput;
-        lifeMinInput.classList.remove('top');
-        lifeMaxInput.classList.remove('top');
-        target.classList.add('top');
-    }, { capture: true });
-}
-
-document.addEventListener('pointerup', () => {
-    if (attackMinInput && attackMaxInput) { attackMinInput.classList.remove('top'); attackMaxInput.classList.remove('top'); }
-    if (lifeMinInput && lifeMaxInput) { lifeMinInput.classList.remove('top'); lifeMaxInput.classList.remove('top'); }
-});
-
-let attackDragging = false;
-let attackDragTarget = null;
-if (attackMinInput && attackMaxInput) {
-    const wrapper = attackMinInput.parentElement;
     wrapper.style.touchAction = 'none';
-    wrapper.addEventListener('pointerdown', (e) => {
+    let dragging = false, dragTarget = null;
+    wrapper.addEventListener('pointerdown', e => {
         e.preventDefault();
-        wrapper.setPointerCapture(e.pointerId);
+        try { wrapper.setPointerCapture(e.pointerId); } catch (err) {}
         const rect = wrapper.getBoundingClientRect();
         const clickX = e.clientX;
-        const leftPos = rect.left + ((attackMin - 1) / (6 - 1)) * rect.width;
-        const rightPos = rect.left + ((attackMax - 1) / (6 - 1)) * rect.width;
-        attackDragTarget = (clickX < (leftPos + rightPos) / 2) ? 'min' : 'max';
-        attackDragging = true;
-        attackMinInput.classList.remove('top'); attackMaxInput.classList.remove('top');
-        (attackDragTarget === 'min' ? attackMinInput : attackMaxInput).classList.add('top');
+        const leftPos = rect.left + ((getVals().min - 1) / (6 - 1)) * rect.width;
+        const rightPos = rect.left + ((getVals().max - 1) / (6 - 1)) * rect.width;
+        dragTarget = (clickX < (leftPos + rightPos) / 2) ? 'min' : 'max';
+        dragging = true;
+        minInput.classList.remove('top'); maxInput.classList.remove('top');
+        (dragTarget === 'min' ? minInput : maxInput).classList.add('top');
         const rel = Math.min(1, Math.max(0, (clickX - rect.left) / rect.width));
         const val = Math.round(rel * (6 - 1) + 1);
-        if (attackDragTarget === 'min') {
-            attackMin = Math.min(val, attackMax);
-            attackMinInput.value = attackMin;
-            attackMinVal.textContent = attackMin;
-        } else {
-            attackMax = Math.max(val, attackMin);
-            attackMaxInput.value = attackMax;
-            attackMaxVal.textContent = attackMax;
-        }
-        setDoubleRangeBackground(wrapper, attackMin, attackMax);
+        const {min: curMin, max: curMax} = getVals();
+        if (dragTarget === 'min') setVals({min: Math.min(val, curMax), max: curMax});
+        else setVals({min: curMin, max: Math.max(val, curMin)});
+        updateDisplay();
         applyFilters();
     });
-    wrapper.addEventListener('pointermove', (e) => {
-        if (!attackDragging) return;
+    wrapper.addEventListener('pointermove', e => {
+        if (!dragging) return;
         const rect = wrapper.getBoundingClientRect();
         const rel = Math.min(1, Math.max(0, (e.clientX - rect.left) / rect.width));
         const val = Math.round(rel * (6 - 1) + 1);
-        if (attackDragTarget === 'min') {
-            attackMin = Math.min(val, attackMax);
-            attackMinInput.value = attackMin;
-            attackMinVal.textContent = attackMin;
-        } else if (attackDragTarget === 'max') {
-            attackMax = Math.max(val, attackMin);
-            attackMaxInput.value = attackMax;
-            attackMaxVal.textContent = attackMax;
-        }
-        setDoubleRangeBackground(wrapper, attackMin, attackMax);
+        const {min: curMin, max: curMax} = getVals();
+        if (dragTarget === 'min') setVals({min: Math.min(val, curMax), max: curMax});
+        else if (dragTarget === 'max') setVals({min: curMin, max: Math.max(val, curMin)});
+        updateDisplay();
         applyFilters();
     });
-    wrapper.addEventListener('pointerup', (e) => {
-        attackDragging = false;
-        attackDragTarget = null;
+    wrapper.addEventListener('pointerup', e => {
+        dragging = false; dragTarget = null;
         try { wrapper.releasePointerCapture(e.pointerId); } catch (err) {}
-        attackMinInput.classList.remove('top'); attackMaxInput.classList.remove('top');
+        minInput.classList.remove('top'); maxInput.classList.remove('top');
     });
 }
 
-let lifeDragging = false;
-let lifeDragTarget = null;
-if (lifeMinInput && lifeMaxInput) {
-    const wrapper = lifeMinInput.parentElement;
-    wrapper.style.touchAction = 'none';
-    wrapper.addEventListener('pointerdown', (e) => {
-        e.preventDefault();
-        wrapper.setPointerCapture(e.pointerId);
-        const rect = wrapper.getBoundingClientRect();
-        const clickX = e.clientX;
-        const leftPos = rect.left + ((lifeMin - 1) / (6 - 1)) * rect.width;
-        const rightPos = rect.left + ((lifeMax - 1) / (6 - 1)) * rect.width;
-        lifeDragTarget = (clickX < (leftPos + rightPos) / 2) ? 'min' : 'max';
-        lifeDragging = true;
-        lifeMinInput.classList.remove('top'); lifeMaxInput.classList.remove('top');
-        (lifeDragTarget === 'min' ? lifeMinInput : lifeMaxInput).classList.add('top');
-        const rel = Math.min(1, Math.max(0, (clickX - rect.left) / rect.width));
-        const val = Math.round(rel * (6 - 1) + 1);
-        if (lifeDragTarget === 'min') {
-            lifeMin = Math.min(val, lifeMax);
-            lifeMinInput.value = lifeMin;
-            lifeMinVal.textContent = lifeMin;
-        } else {
-            lifeMax = Math.max(val, lifeMin);
-            lifeMaxInput.value = lifeMax;
-            lifeMaxVal.textContent = lifeMax;
-        }
-        setDoubleRangeBackground(wrapper, lifeMin, lifeMax);
-        applyFilters();
-    });
-    wrapper.addEventListener('pointermove', (e) => {
-        if (!lifeDragging) return;
-        const rect = wrapper.getBoundingClientRect();
-        const rel = Math.min(1, Math.max(0, (e.clientX - rect.left) / rect.width));
-        const val = Math.round(rel * (6 - 1) + 1);
-        if (lifeDragTarget === 'min') {
-            lifeMin = Math.min(val, lifeMax);
-            lifeMinInput.value = lifeMin;
-            lifeMinVal.textContent = lifeMin;
-        } else if (lifeDragTarget === 'max') {
-            lifeMax = Math.max(val, lifeMin);
-            lifeMaxInput.value = lifeMax;
-            lifeMaxVal.textContent = lifeMax;
-        }
-        setDoubleRangeBackground(wrapper, lifeMin, lifeMax);
-        applyFilters();
-    });
-    wrapper.addEventListener('pointerup', (e) => {
-        lifeDragging = false;
-        lifeDragTarget = null;
-        try { wrapper.releasePointerCapture(e.pointerId); } catch (err) {}
-        lifeMinInput.classList.remove('top'); lifeMaxInput.classList.remove('top');
-    });
-}
-function parseAttackCondition(condition) {
-    if (!condition) return null;
-    const s = condition.trim();
-    const m = s.match(/^(<=|>=|<|>|=)?\s*(\d+)$/);
-    if (!m) return null;
-    return { op: m[1] || '=', val: parseInt(m[2], 10) };
-}
+attachDoubleRange(attackMinInput, attackMaxInput, attackMinVal, attackMaxVal, () => ({min: attackMin, max: attackMax}), v => { attackMin = v.min; attackMax = v.max; if (attackMinInput) attackMinInput.value = attackMin; if (attackMaxInput) attackMaxInput.value = attackMax; });
+attachDoubleRange(lifeMinInput, lifeMaxInput, lifeMinVal, lifeMaxVal, () => ({min: lifeMin, max: lifeMax}), v => { lifeMin = v.min; lifeMax = v.max; if (lifeMinInput) lifeMinInput.value = lifeMin; if (lifeMaxInput) lifeMaxInput.value = lifeMax; });
 
 // Supprime les accents et met en minuscule 
 function normalizeStr(s) {
@@ -344,202 +234,131 @@ function filterCards(value) {
 
 // Fonction de recherche et d'affichage des cartes
 function applyFilters() {
-    const familiersCatalogue = document.getElementById("familiers-catalogue");
-    const armesCatalogue = document.getElementById("armes-catalogue");
-    const sortsCatalogue = document.getElementById("sorts-catalogue");
-    const familiersTitle = document.getElementById("familiers-title");
-    const armesTitle = document.getElementById("armes-title");
-    const sortsTitle = document.getElementById("sorts-title");
+    const familiersCatalogue = $id("familiers-catalogue");
+    const armesCatalogue = $id("armes-catalogue");
+    const sortsCatalogue = $id("sorts-catalogue");
+    const nourritureCatalogue = $id("nourriture-catalogue");
+    const familiersTitle = $id("familiers-title");
+    const armesTitle = $id("armes-title");
+    const sortsTitle = $id("sorts-title");
+    const nourritureTitle = $id("nourriture-title");
+
     let effectiveCategory = selectedCategory;
     if (selectedCategory === 'tous') {
-        if (selectedType !== 'tous' || selectedRarity !== 'tous') {
-            effectiveCategory = 'familiers';
-        } else if (attackMin !== 1 || attackMax !== 6 || lifeMin !== 1 || lifeMax !== 6) {
-            effectiveCategory = 'familiers-armes';
+        if (selectedType !== 'tous' || selectedRarity !== 'tous') effectiveCategory = 'familiers';
+        else if (attackMin !== 1 || attackMax !== 6 || lifeMin !== 1 || lifeMax !== 6) effectiveCategory = 'familiers-armes';
+    }
+
+    // Initial display selon catégorie effective
+    const config = {
+        'tous': {f: true, a: true, s: true, n: true},
+        'familiers-armes': {f: true, a: true, s: false, n: false},
+        'familiers': {f: true, a: false, s: false, n: false},
+        'armes': {f: false, a: true, s: false, n: false},
+        'sorts': {f: false, a: false, s: true, n: false},
+        'nourriture': {f: false, a: false, s: false, n: true}
+    }[effectiveCategory] || {f:true,a:true,s:true,n:true};
+
+    if (familiersCatalogue) setDisplay(familiersCatalogue, config.f, 'grid');
+    if (armesCatalogue) setDisplay(armesCatalogue, config.a, 'grid');
+    if (sortsCatalogue) setDisplay(sortsCatalogue, config.s, 'grid');
+    if (nourritureCatalogue) setDisplay(nourritureCatalogue, config.n, 'grid');
+
+    const normSearch = norm(searchValue);
+
+    function matchesName(img){
+        const name = norm(img.alt);
+        const extra = extraKeywords[name] || img.dataset.keywords || '';
+        return name.includes(normSearch) || norm(extra).includes(normSearch);
+    }
+
+    function matchesType(img){
+        if (selectedType === 'tous') return true;
+        const t = (img.dataset.type || '').toLowerCase();
+        return selectedType === 'aucun' ? (t === '' || t === 'aucun') : (t === selectedType);
+    }
+
+    function matchesRarity(img){
+        if (selectedRarity === 'tous') return true;
+        const r = (img.dataset.rarity || '').toLowerCase();
+        return r === selectedRarity;
+    }
+
+    function processContainer(container, predicate, titleEl){
+        if (!container || container.style.display === 'none') {
+            if (titleEl) titleEl.style.display = 'none';
+            if (container) setDisplay(container, false);
+            return 0;
         }
+        const cards = container.querySelectorAll('.catalogue-card');
+        let visible = 0;
+        cards.forEach(img => {
+            const show = predicate(img);
+            setCardDisplay(img, show);
+            if (show) visible++;
+        });
+        if (titleEl) titleEl.style.display = visible > 0 ? 'block' : 'none';
+        setDisplay(container, visible > 0, 'grid');
+        return visible;
     }
-    if (effectiveCategory === 'tous') {
-        familiersCatalogue.style.display = "grid";
-        armesCatalogue.style.display = "grid";
-        sortsCatalogue.style.display = "grid";
-        familiersTitle.style.display = "block";
-        armesTitle.style.display = "block";
-        sortsTitle.style.display = "block";
-    } else if (effectiveCategory === 'familiers-armes') {
-        familiersCatalogue.style.display = "grid";
-        armesCatalogue.style.display = "grid";
-        sortsCatalogue.style.display = "none";
-        familiersTitle.style.display = "block";
-        armesTitle.style.display = "block";
-        sortsTitle.style.display = "none";
-    } else if (effectiveCategory === 'familiers') {
-        familiersCatalogue.style.display = "grid";
-        armesCatalogue.style.display = "none";
-        sortsCatalogue.style.display = "none";
-        familiersTitle.style.display = "block";
-        armesTitle.style.display = "none";
-        sortsTitle.style.display = "none";
-    } else if (effectiveCategory === 'armes') {
-        familiersCatalogue.style.display = "none";
-        armesCatalogue.style.display = "grid";
-        sortsCatalogue.style.display = "none";
-        familiersTitle.style.display = "none";
-        armesTitle.style.display = "block";
-        sortsTitle.style.display = "none";
-    } else if (effectiveCategory === 'sorts') {
-        familiersCatalogue.style.display = "none";
-        armesCatalogue.style.display = "none";
-        sortsCatalogue.style.display = "grid";
-        familiersTitle.style.display = "none";
-        armesTitle.style.display = "none";
-        sortsTitle.style.display = "block";
-    }
+
     let totalVisible = 0;
 
-    // Bloc "Familiers"
-    if (familiersCatalogue.style.display !== "none") {
-        const cards = familiersCatalogue.querySelectorAll(".catalogue-card");
-        let visible = 0;
-        cards.forEach(img => {
-            const normSearch = normalizeStr(searchValue);
-            const cardNameNorm = normalizeStr(img.alt);
-            const extra = extraKeywords[cardNameNorm] || img.dataset.keywords || '';
-            const nameMatch = cardNameNorm.includes(normSearch) || normalizeStr(extra).includes(normSearch);
-            let typeMatch = true;
-            if (selectedType !== 'tous') {
-                const t = (img.dataset.type || '').toLowerCase();
-                typeMatch = (selectedType === 'aucun')
-                    ? (t === '' || t === 'aucun')
-                    : (t === selectedType);
-            }
-            let rarityMatch = true;
-            if (selectedRarity !== 'tous') {
-                const r = (img.dataset.rarity || '').toLowerCase();
-                rarityMatch = r === selectedRarity;
-            }
-            let expansionMatch = true;
-            if (selectedExpansion !== 'toutes') {
-                const e = (img.dataset.expansion || '').toLowerCase();
-                expansionMatch = e === selectedExpansion;
-            }
-            const atkAttr = img.getAttribute('data-attack');
-            const atk = parseInt((atkAttr || '').trim(), 10);
-            let attackMatch;
-            if (isNaN(atk)) {
-                attackMatch = (attackMin === 1 && attackMax === 6);
-            } else {
-                attackMatch = (atk >= attackMin && atk <= attackMax);
-            }
-            const lpAttr = img.getAttribute('data-life');
-            const lp = parseInt((lpAttr || '').trim(), 10);
-            let lifeMatch;
-            if (isNaN(lp)) {
-                lifeMatch = (lifeMin === 1 && lifeMax === 6);
-            } else {
-                lifeMatch = (lp >= lifeMin && lp <= lifeMax);
-            }
-            const show = nameMatch && typeMatch && rarityMatch && expansionMatch && attackMatch && lifeMatch;
-            const wrapper = img.closest('.card-wrapper');
-            if (wrapper) {
-                wrapper.style.display = show ? 'flex' : 'none';
-            } else {
-                img.style.display = show ? 'block' : 'none';
-            }
-            if (show) visible++;
-        });
-        familiersTitle.style.display = visible > 0 ? "block" : "none";
-        familiersCatalogue.style.display = visible > 0 ? "grid" : "none";
-        totalVisible += visible;
-    }
+    totalVisible += processContainer(familiersCatalogue, img => {
+        return matchesName(img) && matchesType(img) && matchesRarity(img) && matchesExpansion(img, selectedExpansion) && matchesRangeImg(img, 'data-attack', attackMin, attackMax) && matchesRangeImg(img, 'data-life', lifeMin, lifeMax);
+    }, familiersTitle);
 
-    // Bloc "Armes"
-    if (armesCatalogue.style.display !== "none") {
-        const cards = armesCatalogue.querySelectorAll(".catalogue-card");
-        let visible = 0;
-        cards.forEach(img => {
-            const normSearch = normalizeStr(searchValue);
-            const cardNameNorm = normalizeStr(img.alt);
-            const extra = extraKeywords[cardNameNorm] || img.dataset.keywords || '';
-            const nameMatch = cardNameNorm.includes(normSearch) || normalizeStr(extra).includes(normSearch);
-            const atkAttr = img.getAttribute('data-attack');
-            const atk = parseInt((atkAttr || '').trim(), 10);
-            let attackMatch;
-            if (isNaN(atk)) {
-                attackMatch = (attackMin === 1 && attackMax === 6);
-            } else {
-                attackMatch = (atk >= attackMin && atk <= attackMax);
-            }
-            const lpAttr = img.getAttribute('data-life');
-            const lp = parseInt((lpAttr || '').trim(), 10);
-            let lifeMatch;
-            if (isNaN(lp)) {
-                lifeMatch = (lifeMin === 1 && lifeMax === 6);
-            } else {
-                lifeMatch = (lp >= lifeMin && lp <= lifeMax);
-            }
-            let expansionMatch = true;
-            if (selectedExpansion !== 'toutes') {
-                const e = (img.dataset.expansion || '').toLowerCase();
-                expansionMatch = e === selectedExpansion;
-            }
-            const show = nameMatch && attackMatch && lifeMatch && expansionMatch;
-            const wrapper = img.closest('.card-wrapper');
-            if (wrapper) {
-                wrapper.style.display = show ? 'flex' : 'none';
-            } else {
-                img.style.display = show ? 'block' : 'none';
-            }
-            if (show) visible++;
-        });
-        armesTitle.style.display = visible > 0 ? "block" : "none";
-        armesCatalogue.style.display = visible > 0 ? "grid" : "none";
-        totalVisible += visible;
-    }
+    totalVisible += processContainer(armesCatalogue, img => {
+        return matchesName(img) && matchesRangeImg(img, 'data-attack', attackMin, attackMax) && matchesRangeImg(img, 'data-life', lifeMin, lifeMax) && matchesExpansion(img, selectedExpansion);
+    }, armesTitle);
 
-    // Bloc "Sorts"
-    if (sortsCatalogue.style.display !== "none") { 
-        const cards = sortsCatalogue.querySelectorAll(".catalogue-card");
-        let visible = 0;
+    totalVisible += processContainer(sortsCatalogue, img => {
+        return matchesExpansion(img, selectedExpansion) && matchesName(img);
+    }, sortsTitle);
 
-        cards.forEach(img => {
-            const normSearch = normalizeStr(searchValue);
-            const cardNameNorm = normalizeStr(img.alt);
-            const extra = extraKeywords[cardNameNorm] || img.dataset.keywords || '';
+    totalVisible += processContainer(nourritureCatalogue, img => {
+        return matchesExpansion(img, selectedExpansion) && matchesName(img);
+    }, nourritureTitle);
 
-            let expansionMatch = true;
-            if (selectedExpansion !== 'toutes') {
-                const e = (img.dataset.expansion || '').toLowerCase();
-                expansionMatch = e === selectedExpansion;
-            }
-
-            const show =
-                expansionMatch &&
-                (cardNameNorm.includes(normSearch) || normalizeStr(extra).includes(normSearch));
-
-            const wrapper = img.closest('.card-wrapper');
-
-            if (wrapper) {
-             wrapper.style.display = show ? 'flex' : 'none';
-            } else {
-                img.style.display = show ? 'block' : 'none';
-            }
-
-            if (show) visible++;
-        });
-    sortsTitle.style.display = visible > 0 ? "block" : "none";
-    sortsCatalogue.style.display = visible > 0 ? "grid" : "none";
-    totalVisible += visible;
-}
-
-// Compteur de résultats
-    const searchResults = document.getElementById("search-results");
-    searchResults.textContent = totalVisible === 1 ? "1 card found using the search filters" : `${totalVisible} cards found using the search filters`;
+    const searchResults = $id('search-results');
+    if (searchResults) searchResults.textContent = totalVisible === 1 ? "1 card found using the search filters" : `${totalVisible} cards found using the search filters`;
 }
 applyFilters();
 
 // Fonction de zoom et de légende des cartes
 (function(){
     let current = null;
+
+    // Noms d'extensions
+    const expansionNames = {
+        'core': 'Core',
+        'shadowlands': 'Shadowlands',
+        'rassasie_et_hydrate': 'Rassasié et Hydraté'
+    };
+
+    // Légendes d'extensions
+    const extensionCaptions = {
+        'core': 'Available in the base game',
+        'shadowlands': 'Available in the minor expansion "Shadowlands"',
+        'dire_diets': 'Available in the major expansion "Dire Diets"'
+    };
+
+    function expansionCaptionFallback(expansion){
+        if (!expansion) return '';
+        if (expansion === 'core') return 'Available in the base game';
+        if (expansionNames[expansion]) return 'Available in the ' + expansionNames[expansion];
+        const formattedExpansion = expansion.replace(/_/g, ' ').split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+        return 'Available in the ' + formattedExpansion;
+    }
+
+    function captionForImage(img){
+        if (!img) return '';
+        const dataCaption = (img.dataset && img.dataset.caption) ? img.dataset.caption : null;
+        if (dataCaption) return dataCaption;
+        const expansion = (img.dataset.expansion || '').toLowerCase();
+        if (expansion && extensionCaptions[expansion]) return extensionCaptions[expansion];
+        return expansionCaptionFallback(expansion);
+    }
 
     function getBaseName(src) {
         try {
@@ -574,15 +393,7 @@ applyFilters();
         const cap = document.createElement('div');
         cap.className = 'card-caption';
 
-        // Affiche une légende en fonction de l'extension
-        const expansion = img.dataset.expansion || '';
-
-        if (expansion === 'core') {
-            cap.textContent = "Available in the base game";
-        } else {
-            const formattedExpansion = expansion.charAt(0).toUpperCase() + expansion.slice(1).toLowerCase();
-            cap.textContent = "Available in the " + formattedExpansion + " Expansion";
-        }
+        cap.textContent = captionForImage(img);
         content.appendChild(cap);
 
         overlay.appendChild(content);
@@ -626,13 +437,7 @@ applyFilters();
             const cap = document.createElement('div');
             cap.className = 'card-caption';
 
-            const expansion = img.dataset.expansion || '';
-            if (expansion === 'core') {
-                cap.textContent = "Available in the base game";
-            } else {
-                const formattedExpansion = expansion.charAt(0).toUpperCase() + expansion.slice(1).toLowerCase();
-                cap.textContent = "Available in the " + formattedExpansion + " Expansion";
-            }
+            cap.textContent = captionForImage(img);
             wrapper.appendChild(cap);
         });
     }
