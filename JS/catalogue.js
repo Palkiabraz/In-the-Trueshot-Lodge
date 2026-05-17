@@ -218,7 +218,8 @@ const extraKeywords = {
     'hound': 'arrow shot',
     'bear': 'trap',
     'fox': 'aspect',
-    'rodent': 'bite sting'
+    'rodent': 'bite sting',
+    'lesser dragonkin': 'affinity'
 };
 
 // Bouton "Recherche"
@@ -328,6 +329,7 @@ applyFilters();
     const expansionNames = {
         'core': 'Base Game',
         'shadowlands': 'Shadowlands',
+        'dragonflight': 'Dragonflight',
         'dire_diets': 'Dire Diets'
     };
 
@@ -335,6 +337,7 @@ applyFilters();
     const extensionCaptions = {
         'core': 'Available in the base game',
         'shadowlands': 'Available in the minor expansion "Shadowlands"',
+        'dragonflight': 'Available in the minor expansion "Dragonflight"',
         'dire_diets': 'Available in the major expansion "Dire Diets"'
     };
 

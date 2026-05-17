@@ -140,6 +140,14 @@
     justify-self: center;
 }
 
+.emineure-column.classic-grid, .emajeure-column.classic-grid {
+    grid-template-columns: repeat(3, 1fr);
+}
+.emineure-column.classic-grid > *, .emajeure-column.classic-grid > * {
+    grid-column: auto !important;
+    justify-self: center;
+}
+
 .extension-column img {
     width: 100%;
     border-radius: 0;
