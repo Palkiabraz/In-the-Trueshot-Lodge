@@ -4,3 +4,4 @@
 <ins>February 22th 2026 :</ins> (English) Release of the game<br>
 <ins>Mars 15th 2026 :</ins> Release of the "Shadowlands" minor expansion
 <ins>April 19th 2026 :</ins> Release of the "Dire Diets" major expansion
+<ins>May 17th 2026 :</ins> Release of the "Dragonflight" minor expansion
