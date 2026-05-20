@@ -148,11 +148,6 @@
     justify-self: center;
 }
 
-.extension-column img {
-    width: 100%;
-    border-radius: 0;
-}
-
 .button-download {
     display: inline-flex;
     flex-direction: row;
@@ -237,14 +232,71 @@ button.button-download {
 }
 
 @media (max-width: 600px){
-    .extension, .extension-header, .extension-description, .extension-note, .extension-column, .card-caption {
+    .extension, .extension-header, .extension-description, .extension-note, .card-caption {
         padding-left: 1rem;
         padding-right: 1rem;
         box-sizing: border-box;
     }
-    
+
+    .extension-title {
+        font-size: 28px;
+    }
+
+    .extension-description, .extension-note {
+        font-size: 0.95rem;
+    }
+
+    .emineure-content, .emajeure-content{
+        grid-template-columns: 1fr; 
+        gap: 15px; 
+    }
+
+    .emajeure-content {
+        flex-direction: column;
+        align-items: center;
+        margin-left: 0;
+        padding: 0.75rem;
+        padding-top: 1rem;
+        gap: 1rem;
+    }
+
+    .emajeure-content h2, .emajeure-content .quote {
+        position: static;
+        left: auto;
+        top: auto;
+        text-align: center;
+    }
+
+    .card {
+        width: 75px;
+        height: 75px;
+    }
+
+    .card img {
+        width: 48px;
+    }
+
+    .food-image {
+        width: auto;
+        height: 40vw; 
+        max-height: 260px; 
+        margin: 0.5rem auto;
+    }
+
+    .emajeure-text {
+        max-width: 100%;
+        text-align: center;
+        margin: 0 auto;
+        padding: 0 0.5rem;
+    }
+
+    .emajeure-text p {
+        font-size: 1rem;
+        text-align: center;
+    }
+
     .button-download {
-        width: 95%;
+        width: 100%;
         padding: 0.6rem;
         font-size: 1rem;
         margin: 0.5rem auto;
@@ -261,23 +313,5 @@ button.button-download {
         width: 40px;
         height: auto;
         margin: 0;
-    }
-
-    .emineure-content{
-        grid-template-columns: 1fr; 
-        gap: 15px; 
-    }
-
-    .extension-column {
-        display: flex;
-        flex-direction: row; 
-        flex-wrap: wrap;    
-        justify-content: center;
-        gap: 0.5rem;
-    }
-
-    .card {
-        width: 75px;
-        height: 75px;
     }
 }

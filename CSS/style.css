@@ -426,6 +426,13 @@ h2 {
     .menu .dropdown {
         min-width: 50px;
         margin-top: 6px;
+        left: -11px;
+    }
+
+    h1 {
+        padding: 0 1rem;
+        box-sizing: border-box;
+        word-wrap: break-word;
     }
 
     .menu .dropdown li a {
