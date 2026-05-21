@@ -314,4 +314,8 @@ button.button-download {
         height: auto;
         margin: 0;
     }
+
+    .card-caption {
+        font-size: 0.55rem !important;
+    }
 }
