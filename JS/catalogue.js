@@ -108,10 +108,10 @@ function setSelectedCategory(v){ selectedCategory = v || 'tous'; }
 function setSelectedType(v){ selectedType = v || 'tous'; }
 function setSelectedRarity(v){ selectedRarity = v || 'tous'; }
 
-attachOptions('#expansion-dropdown a', setSelectedExpansion, expansionBtn, 'Ensemble de cartes');
-attachOptions('#category-dropdown a', setSelectedCategory, categoryBtn, 'Catégorie de cartes');
-attachOptions('#type-dropdown a', setSelectedType, typeBtn, 'Type de familiers');
-attachOptions('#rarity-dropdown a', setSelectedRarity, rarityBtn, 'Rareté du familier');
+attachOptions('#expansion-dropdown a', setSelectedExpansion, expansionBtn, 'Card Set');
+attachOptions('#category-dropdown a', setSelectedCategory, categoryBtn, 'Card Category');
+attachOptions('#type-dropdown a', setSelectedType, typeBtn, 'Pet Type');
+attachOptions('#rarity-dropdown a', setSelectedRarity, rarityBtn, 'Pet Rarity');
 
 // Filtres "Slider" factorisés
 const attackMinInput = $id('attack-min');
@@ -219,7 +219,7 @@ const extraKeywords = {
     'bear': 'trap',
     'fox': 'aspect',
     'rodent': 'bite sting',
-    'lesser dragonkin': 'affinity'
+    'lesser_dragonkin': 'affinity'
 };
 
 // Bouton "Recherche"
@@ -234,10 +234,12 @@ function applyFilters() {
     const armesCatalogue = $id("armes-catalogue");
     const sortsCatalogue = $id("sorts-catalogue");
     const nourritureCatalogue = $id("nourriture-catalogue");
+    const championCatalogue = $id("champion-catalogue");
     const familiersTitle = $id("familiers-title");
     const armesTitle = $id("armes-title");
     const sortsTitle = $id("sorts-title");
     const nourritureTitle = $id("nourriture-title");
+    const championTitle = $id("champion-title");
 
     let effectiveCategory = selectedCategory;
     if (selectedCategory === 'tous') {
@@ -247,13 +249,14 @@ function applyFilters() {
 
     // Initial display selon catégorie effective
     const config = {
-        'tous': {f: true, a: true, s: true, n: true},
-        'familiers-armes': {f: true, a: true, s: false, n: false},
-        'familiers': {f: true, a: false, s: false, n: false},
-        'armes': {f: false, a: true, s: false, n: false},
-        'sorts': {f: false, a: false, s: true, n: false},
-        'nourriture': {f: false, a: false, s: false, n: true}
-    }[effectiveCategory] || {f:true,a:true,s:true,n:true};
+        'tous': {f: true, a: true, s: true, n: true, ch: true},
+        'familiers-armes': {f: true, a: true, s: false, n: false, ch: false},
+        'familiers': {f: true, a: false, s: false, n: false, ch: false},
+        'armes': {f: false, a: true, s: false, n: false, ch: false},
+        'sorts': {f: false, a: false, s: true, n: false, ch: false},
+        'nourriture': {f: false, a: false, s: false, n: true, ch: false},
+        'heroes': {f: false, a: false, s: false, n: false, ch: true}
+    }[effectiveCategory] || {f:true,a:true,s:true,n:true,ch:true};
 
     if (familiersCatalogue) setDisplay(familiersCatalogue, config.f, 'grid');
     if (armesCatalogue) setDisplay(armesCatalogue, config.a, 'grid');
@@ -316,6 +319,10 @@ function applyFilters() {
         return matchesExpansion(img, selectedExpansion) && matchesName(img);
     }, nourritureTitle);
 
+    totalVisible += processContainer(championCatalogue, img => {
+        return matchesExpansion(img, selectedExpansion) && matchesName(img);
+    }, championTitle);
+
     const searchResults = $id('search-results');
     if (searchResults) searchResults.textContent = totalVisible === 1 ? "1 card found using the search filters" : `${totalVisible} cards found using the search filters`;
 }
@@ -327,10 +334,11 @@ applyFilters();
 
     // Noms d'extensions
     const expansionNames = {
-        'core': 'Base Game',
+        'core': 'base game',
         'shadowlands': 'Shadowlands',
         'dragonflight': 'Dragonflight',
-        'dire_diets': 'Dire Diets'
+        'rassasie_et_hydrate': 'Dire Diets',
+        'champions_du_pavillon': 'Hunting Heroes'
     };
 
     // Légendes d'extensions
@@ -338,7 +346,8 @@ applyFilters();
         'core': 'Available in the base game',
         'shadowlands': 'Available in the minor expansion "Shadowlands"',
         'dragonflight': 'Available in the minor expansion "Dragonflight"',
-        'dire_diets': 'Available in the major expansion "Dire Diets"'
+        'rassasie_et_hydrate': 'Available in the major expansion "Dire Diets"',
+        'champions_du_pavillon': 'Available in the major expansion "Hunting Heroes"'
     };
 
     // Génère une légende d'extension à partir du nom de l'extension, en utilisant les légendes prédéfinies si disponibles

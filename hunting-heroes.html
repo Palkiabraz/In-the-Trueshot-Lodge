@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>In the Trueshot Lodge</title>
+	<link rel="stylesheet" href="./CSS/style.css">
+	<link rel="stylesheet" href="./CSS/extensions.css">
+	<link rel="icon" href="./Images/Logos/Icone.png" />
+</head>
+
+<body>
+	<header class="header">
+		<div class="header-top">
+			<div class="logo">
+				<img src="./Images/Logos/Principal.PNG" alt=" Main Logo" height="250 px">
+			</div>
+			<div class="header-controls">
+				<button id="flag-btn" class="flag-btn" aria-label="Passer en français" data-url="https://palkiabraz.github.io/Au-Pavillon-du-Traqueur/champions-du-pavillon.html">
+					<img src="./Images/Icones/Switch.jpg" alt="Passer en français" title="Passer en français">
+				</button>
+				<button id="bg-toggle" class="bg-toggle" aria-label="Change the background">
+					<img src="./Images/Icones/Daynight.jpg" alt="Change the background" title="Switch to Daymode or Nightmode">
+				</button>
+			</div>
+		</div>
+		<nav class="menu">
+			<ul>
+				<li><a href="home.html">Home</a></li>
+				<li><a href="game-presentation.html">Game Presentation</a></li>
+				<li><a href="card-library.html">Card Library</a></li>
+				<li class="menu-extensions">
+					<button id="extensions-btn" class="menu-btn" aria-expanded="false" aria-controls="extensions-dropdown">Expansions</button>
+					<ul id="extensions-dropdown" class="dropdown">
+						<li><a href="minor-expansions.html">Minor Expansions</a></li>
+						<li><a href="dire-diets.html">Dire Diets</a></li>
+						<li><a href="hunting-heroes.html">Hunting Heroes</a></li>
+					</ul>
+				</li>
+			</ul>
+		</nav>
+	</header>
+<br>
+<p class="extension-description"><i>A major expansion is an expansion that adds new mechanics modifying the fundamental rules of the game.</i></p>
+<hr class="subtitle-bar">
+<section class="extension">
+	<div class="extension-header">
+    	<div class="extension-logo-title">
+        	<h1 class="extension-title">Hunting Heroes</h1>
+    	</div>
+    	<p class="extension-description">The major expansion "Hunting Heroes" adds a new category of card : heroes, with twelve cards added. </p>
+	</div>
+	<div class="emajeure-content">
+		<h2>Obey the hero's strict law of the hall!</h2>
+		<i class="quote">“Heroes are legendary figures among the Trueshot Lodge.”</i>
+		<img src="./Images/Cartes/Hunting_Heroes/Rexxar.png" alt="Hero Example" class="champion-image">
+		<div class="emajeure-text">
+			A hero has a unique passive effect. These passive effects can modify the game by removing a card or changing a gamerule, for example. However, a hero’s effect takes precedence over any other effect during the game. 
+			<br>
+            <br>
+			<div class="icons-row">
+				<img src="./Images/Icones/Hunting_Heroes/Gnome_F.jpg" alt="Addie Fizzlebog" class="icon-img">
+				<img src="./Images/Icones/Hunting_Heroes/Vrykul.jpg" alt="Beastmaster Hilaire" class="icon-img">
+				<img src="./Images/Icones/Hunting_Heroes/Mort-vivant_F.jpg" alt="Dark Ranger Velonara" class="icon-img">
+                <div class="icon-wrap">
+					<img src="./Images/Icones/Hunting_Heroes/Emmarel.jpg" alt="Emmarel Shadewarden" class="icon-img" id="emmarel-icon">
+					<div class="card-preview" aria-hidden="true">
+						<img src="./Images/Cartes/Hunting_Heroes/Legendary_Beast.png" alt="Legendary Beast" class="card-img">
+					</div>
+				</div>
+				<img src="./Images/Icones/Hunting_Heroes/Sang_M.jpg" alt="Halduron Brightwing" class="icon-img">
+				<img src="./Images/Icones/Hunting_Heroes/Nain_M.jpg" alt="Hemet Nesingwary" class="icon-img">
+				<img src="./Images/Icones/Hunting_Heroes/Worgen_M.jpg" alt="Huntsman Blake" class="icon-img">
+				<img src="./Images/Icones/Hunting_Heroes/Haut-Roc_M.jpg" alt="Loren Stormhoof" class="icon-img">
+				<img src="./Images/Icones/Hunting_Heroes/Sacrenuit_F.jpg" alt="Nighthuntress Syrenne" class="icon-img">
+				<img src="./Images/Icones/Hunting_Heroes/Rexxar.jpg" alt="Rexxar" class="icon-img">
+				<img src="./Images/Icones/Hunting_Heroes/Nuit_F.jpg" alt="Shandris Feathermoon" class="icon-img">
+				<img src="./Images/Icones/Hunting_Heroes/Sang_F.jpg" alt="Vereesa Windrunner" class="icon-img">
+			</div>
+	        <br><i>A rumor circulates that one of these heroes is seeking daring hunters to challenge a Legendary Beast roaming around the hall...</i>
+            <br>
+            <br>
+            <br>Before the third preparation phase of the game begins, the top card of the hero pile is revealed. The hero’s effect applies for the rest of the game. 
+        </div>
+  	</div>
+	<button class="button-download">
+		<a href="./Fichiers/Hunting_Heroes.zip" download class="button-download">
+			<img src="./Images/Icones/Extension.jpg" alt="Télécharger l'extension" title="Download the 'Hunting Heroes' expansion">
+			<span class="button-text">Get the printable version of the
+				<br>"Hunting Heroes" major expansion !
+			</span>
+		</a>
+	</button>
+</section>
+	<footer>
+		<div class="footer">
+			<p><i><u>In the Trueshot Lodge</u> is compliant with the general terms of use requested by
+					Blizzard Entertainment while respecting the intellectual property rights related to World
+					of Warcraft</i></p>
+			<p><i><u>In the Trueshot Lodge</u> is registered in the <u><a href="https://atelier197.carrd.co/"
+					target="_blank" rel="noopener noreferrer">Atelier 197</a> initiative</i></u></p>
+		</div>
+	</footer>
+	
+	<audio id="envoi-son" src="./Sons/Envoi.mp3" preload="auto"></audio>
+	<button id="contact-btn" aria-label="Contact">
+		<img id="contact-icon" src="./Images/Icones/Contact.jpg" alt="Contact" title="Display the Contact Form" onerror="this.onerror=null;this.src='./Images/Icones/Contact.jpg';">
+	</button>
+	<form id="contact" aria-hidden="true">
+		<h3>Want to contact me ? </h3>
+		<label for="name">Name or Nickname</label>
+		<input type="text" id="name" name="name" required>
+		<label for="email">Mail or Discord</label>
+		<input type="email" id="email" name="email" required>
+		<label for="message">Message</label>
+		<textarea id="message" name="message" rows="5" required></textarea>
+		<div class="submit-row">
+			<button type="button" onclick="submitForm()">Send</button>
+		</div>
+	</form>
+	
+	<script src="./JS/switch.js"></script>
+	<script src="./JS/daynight.js"></script>
+	<script src="./JS/extensions.js"></script>
+	<script src="./JS/formulaire.js"></script>
+</body>
+</html>

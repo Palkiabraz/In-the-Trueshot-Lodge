@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
     
-    // Applique une grille classiquesi le nombre d'images n'est pas égal à 1 modulo 3
+    // Applique une grille classique si le nombre d'images n'est pas égal à 1 modulo 3
     function updateClassicGrid() {
         const cols = document.querySelectorAll('.emineure-column, .emajeure-column');
         cols.forEach(container => {

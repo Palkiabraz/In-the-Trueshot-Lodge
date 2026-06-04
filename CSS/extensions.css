@@ -113,7 +113,15 @@
     margin-left: 0.55rem;   
 }
 
-.food-image:hover {
+.champion-image {
+    position: relative;
+    z-index: 30;
+    width: 300px; 
+    height: auto;
+    margin: 0.25rem auto;
+}
+
+.food-image:hover, .champion-image:hover {
     transform: scale(1.1);
     transition: transform 0.3s; 
 }
@@ -231,6 +239,47 @@ button.button-download {
     padding: 0 2px;
 }
 
+.icons-row {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+    margin: 8px 0;
+    align-items: center;
+    justify-items: center;
+}
+
+.icons-row .icon-img {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    display: block;
+}
+
+.icon-wrap {
+    position: relative;
+    display: inline-block;
+}
+.icon-wrap .card-preview {
+    display: none;
+    position: absolute;
+    top: -10px;
+    left: 60px;
+    z-index: 120;
+    width: 220px;
+    pointer-events: none;
+}
+.icon-wrap:hover .card-preview,
+.icon-wrap:focus-within .card-preview {
+    display: block;
+}
+.card-preview .card-img {
+    width: 100%;
+    height: auto;
+    background: rgba(0,0,0,0.85);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+    display: block;
+}
+
 @media (max-width: 600px){
     .extension, .extension-header, .extension-description, .extension-note, .card-caption {
         padding-left: 1rem;
@@ -317,5 +366,10 @@ button.button-download {
 
     .card-caption {
         font-size: 0.55rem !important;
+    }
+
+    .icon-wrap .card-preview {
+        left: 40px;
+        width: 140px;
     }
 }
