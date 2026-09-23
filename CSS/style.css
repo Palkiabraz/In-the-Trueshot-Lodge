@@ -252,6 +252,7 @@ footer {
     padding: 0.8rem 0;
     text-align: center;
     color: #fff;
+    font-family: Arial;
     font-size: 1rem;
     line-height: 1.4;
     margin-top: auto;
@@ -260,12 +261,14 @@ footer {
 .footer a, .footer a:visited {
     color: #fff;
     text-decoration: none;
+    font-family: Arial;
     font-size: 1rem;
 }
 
 .footer a:hover, .footer a:focus {
     color: #fff;
     font-weight: 700;
+    font-family: Arial;
     font-size: 1rem;
 }
 
