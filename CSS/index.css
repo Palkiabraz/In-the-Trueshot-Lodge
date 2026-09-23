@@ -38,20 +38,20 @@
 }
 
 .logo-credit {
-    font-size: 0.75rem;
-    margin-top: 2rem;
-    color: #ffffff;
+    margin-top: 22px;
+    color: rgba(255, 255, 255, 0.62);
+    font-family: Arial, sans-serif;
+    font-size: 0.8rem;
     font-style: italic;
 }
 
 .logo-credit a {
-    color: inherit;
+    color: rgba(255, 255, 255, 0.85);
     text-decoration: none;
-    display: inline-block;
-    font-weight: 400;
 }
 
-.logo-credit a:hover {
-    text-decoration: none;
-    font-weight: 700;
+.logo-credit a:hover,
+.logo-credit a:focus-visible {
+    color: #ffffff;
+    text-decoration: underline;
 }
