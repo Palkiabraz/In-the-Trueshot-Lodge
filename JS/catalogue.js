@@ -283,8 +283,8 @@ function applyFilters() {
         return r === selectedRarity;
     }
 
-    function processContainer(container, predicate, titleEl){
-        if (!container || container.style.display === 'none') {
+    function processContainer(container, predicate, titleEl, enabled = true){
+        if (!container || !enabled) {
             if (titleEl) titleEl.style.display = 'none';
             if (container) setDisplay(container, false);
             return 0;
@@ -305,23 +305,23 @@ function applyFilters() {
 
     totalVisible += processContainer(familiersCatalogue, img => {
         return matchesName(img) && matchesType(img) && matchesRarity(img) && matchesExpansion(img, selectedExpansion) && matchesRangeImg(img, 'data-attack', attackMin, attackMax) && matchesRangeImg(img, 'data-life', lifeMin, lifeMax);
-    }, familiersTitle);
+    }, familiersTitle, config.f);
 
     totalVisible += processContainer(armesCatalogue, img => {
         return matchesName(img) && matchesRangeImg(img, 'data-attack', attackMin, attackMax) && matchesRangeImg(img, 'data-life', lifeMin, lifeMax) && matchesExpansion(img, selectedExpansion);
-    }, armesTitle);
+    }, armesTitle, config.a);
 
     totalVisible += processContainer(sortsCatalogue, img => {
         return matchesExpansion(img, selectedExpansion) && matchesName(img);
-    }, sortsTitle);
+    }, sortsTitle, config.s);
 
     totalVisible += processContainer(nourritureCatalogue, img => {
         return matchesExpansion(img, selectedExpansion) && matchesName(img);
-    }, nourritureTitle);
+    }, nourritureTitle, config.n);
 
     totalVisible += processContainer(championCatalogue, img => {
         return matchesExpansion(img, selectedExpansion) && matchesName(img);
-    }, championTitle);
+    }, championTitle, config.ch);
 
     const searchResults = $id('search-results');
     if (searchResults) searchResults.textContent = totalVisible === 1 ? "1 card found using the search filters" : `${totalVisible} cards found using the search filters`;
