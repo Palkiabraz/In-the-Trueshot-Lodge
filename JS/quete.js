@@ -1,39 +1,50 @@
-// Indique si un son est en cours de lecture
-let soundPlaying = false;
-
-(function(){
+(function () {
     const link = document.querySelector('.logo-index-link');
     const img = document.querySelector('.logo-index');
     const audio = document.getElementById('quete-son');
 
-    if (!link || !audio || !img) return;
+    if (!link || !img || !audio) return;
 
-    // Joue le son au clic, puis redirige lorsque le son est terminé
-    link.addEventListener('click', function(e){
-        e.preventDefault();
-        if (soundPlaying) return; 
+    let isRedirecting = false;
+    let redirectTimer = null;
+
+    const redirectToTarget = () => {
+        if (isRedirecting) return;
+
+        isRedirecting = true;
         const href = link.getAttribute('href');
-        audio.currentTime = 0; 
-        img.classList.add('playing'); 
-        const p = audio.play(); 
 
-        audio.addEventListener('ended', function onEnd(){
+        if (href) {
+            window.location.href = href;
+        }
+    };
+
+    link.addEventListener('click', (event) => {
+        event.preventDefault();
+
+        if (isRedirecting) return;
+
+        img.classList.add('playing');
+        audio.currentTime = 0;
+
+        const playPromise = audio.play();
+
+        const finish = () => {
+            clearTimeout(redirectTimer);
             img.classList.remove('playing');
-            soundPlaying = false;
-        }, { once: true });
+            redirectToTarget();
+        };
 
-        // Si le son bug, redirige 
-        soundPlaying = true;
-        if (p !== undefined) {
-            p.catch(() => { img.classList.remove('playing'); window.location.href = href; });
+        audio.addEventListener('ended', finish, { once: true });
+
+        if (playPromise && typeof playPromise.catch === 'function') {
+            playPromise.catch(() => {
+                finish();
+            });
         }
 
-        // Si le son se termine, redirige 
-        audio.addEventListener('ended', function onEnd(){
-            img.classList.remove('playing');
-            window.location.href = href;
-        }, { once: true });
-        
-        setTimeout(() => { img.classList.remove('playing'); if (document.location.href !== href) window.location.href = href; }, 2012);
+        redirectTimer = window.setTimeout(() => {
+            finish();
+        }, 2200);
     });
 })();
