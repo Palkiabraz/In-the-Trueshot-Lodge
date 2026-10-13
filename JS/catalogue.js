@@ -337,8 +337,9 @@ applyFilters();
         'core': 'base game',
         'shadowlands': 'Shadowlands',
         'dragonflight': 'Dragonflight',
-        'rassasie_et_hydrate': 'Dire Diets',
-        'champions_du_pavillon': 'Hunting Heroes'
+        'the_war_within': 'The War Within',
+        'dire_diets': 'Dire Diets',
+        'hunting_heroes': 'Hunting Heroes'
     };
 
     // Légendes d'extensions
@@ -346,6 +347,7 @@ applyFilters();
         'core': 'Available in the base game',
         'shadowlands': 'Available in the minor expansion "Shadowlands"',
         'dragonflight': 'Available in the minor expansion "Dragonflight"',
+        'the_war_within': 'Available in the minor expansion "The War Within"',
         'dire_diets': 'Available in the major expansion "Dire Diets"',
         'hunting_heroes': 'Available in the major expansion "Hunting Heroes"'
     };
