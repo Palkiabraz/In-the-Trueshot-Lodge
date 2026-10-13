@@ -346,8 +346,8 @@ applyFilters();
         'core': 'Available in the base game',
         'shadowlands': 'Available in the minor expansion "Shadowlands"',
         'dragonflight': 'Available in the minor expansion "Dragonflight"',
-        'rassasie_et_hydrate': 'Available in the major expansion "Dire Diets"',
-        'champions_du_pavillon': 'Available in the major expansion "Hunting Heroes"'
+        'dire_diets': 'Available in the major expansion "Dire Diets"',
+        'hunting_heroes': 'Available in the major expansion "Hunting Heroes"'
     };
 
     // Génère une légende d'extension à partir du nom de l'extension, en utilisant les légendes prédéfinies si disponibles
