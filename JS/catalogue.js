@@ -331,6 +331,26 @@ applyFilters();
 // Fonction de zoom et de légende des cartes
 (function(){
     let current = null;
+    const cardSoundConfig = {
+        rarity: 'exotique',
+        soundsByCard: {
+            'Aqiri': './Sons/Exotiques/Aqiri.wav',
+            'Caline': './Sons/Exotiques/Caline.wav',
+            'Carapid': './Sons/Exotiques/Carapid.wav',
+            'Chimaera': './Sons/Exotiques/Chimaera.wav',
+            'Core_Hound': './Sons/Exotiques/Core_Hound.wav',
+            'Devilsaur': './Sons/Exotiques/Devilsaur.wav',
+            'Dreadsteed': './Sons/Exotiques/Dreadsteed.wav',
+            'Pterrordax': './Sons/Exotiques/Pterrordax.wav',
+            'Shale_Beast': './Sons/Exotiques/Shale_Beast.wav',  
+            'Spirit_Beast': './Sons/Exotiques/Spirit_Beast.wav',             
+            'Stone_Hound': './Sons/Exotiques/Stone_Hound.wav',
+            'Water_Strider': './Sons/Exotiques/Water_Strider.wav',
+            'Whiptail': './Sons/Exotiques/Whiptail.wav',
+            'Worm': './Sons/Exotiques/Worm.wav'
+        }
+    };
+    const cardAudio = new WeakMap();    
 
     // Noms d'extensions
     const expansionNames = {
@@ -378,6 +398,33 @@ applyFilters();
         } catch (e) { return src; }
     }
 
+    function playCardSound(img) {
+        if (img.dataset.rarity !== cardSoundConfig.rarity) return;
+
+        const cardName = getBaseName(img.getAttribute('src') || img.src);
+        const soundSrc = cardSoundConfig.soundsByCard[cardName];
+        if (!soundSrc) return;
+
+        let audio = cardAudio.get(img);
+        if (!audio) {
+            audio = new Audio(soundSrc);
+            cardAudio.set(img, audio);
+        }
+
+        audio.currentTime = 0;
+        const playPromise = audio.play();
+        if (playPromise && typeof playPromise.catch === 'function') {
+            playPromise.catch(error => {
+                console.warn('La lecture du son de la carte a échoué.', error);
+            });
+        }
+    }
+
+    function stopCardSound(img) {
+        const audio = cardAudio.get(img);
+        if (audio) audio.pause();
+    }
+
     function getExtensionForImage(img) {
         let extension = img.dataset.extension || img.getAttribute('data-extension') || '';
         if (extension) return extension;
@@ -408,7 +455,7 @@ applyFilters();
         overlay.appendChild(content);
         document.body.appendChild(overlay);
 
-        current = { overlay, clone };
+        current = { overlay, clone, img };
 
         requestAnimationFrame(()=> clone.classList.add('show'));
 
@@ -423,6 +470,7 @@ applyFilters();
 
     function resetZoom(){
         if (!current) return;
+        stopCardSound(current.img);       
         try { current.overlay.parentElement.removeChild(current.overlay); } catch(e){}
         current = null;
     }
@@ -456,6 +504,7 @@ applyFilters();
             if (img.__zoomBound) return;
             img.__zoomBound = true;
             img.addEventListener('click', (e) => {
+                playCardSound(img);
                 if (current) { resetZoom(); return; }
                 openZoom(img);
             });
