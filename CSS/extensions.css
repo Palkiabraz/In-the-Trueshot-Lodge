@@ -331,6 +331,13 @@ button.button-download {
         max-height: 260px; 
         margin: 0.5rem auto;
     }
+    
+    .champion-image {
+        width: 40vw;
+        height: auto; 
+        max-height: 260px; 
+        margin: 0.5rem auto;
+    }
 
     .emajeure-text {
         max-width: 100%;
