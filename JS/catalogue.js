@@ -331,26 +331,7 @@ applyFilters();
 // Fonction de zoom et de légende des cartes
 (function(){
     let current = null;
-    const cardSoundConfig = {
-        rarity: 'exotique',
-        soundsByCard: {
-            'Aqiri': './Sons/Exotiques/Aqiri.wav',
-            'Caline': './Sons/Exotiques/Caline.wav',
-            'Carapid': './Sons/Exotiques/Carapid.wav',
-            'Chimaera': './Sons/Exotiques/Chimaera.wav',
-            'Core_Hound': './Sons/Exotiques/Core_Hound.wav',
-            'Devilsaur': './Sons/Exotiques/Devilsaur.wav',
-            'Dreadsteed': './Sons/Exotiques/Dreadsteed.wav',
-            'Pterrordax': './Sons/Exotiques/Pterrordax.wav',
-            'Shale_Beast': './Sons/Exotiques/Shale_Beast.wav',  
-            'Spirit_Beast': './Sons/Exotiques/Spirit_Beast.wav',             
-            'Stone_Hound': './Sons/Exotiques/Stone_Hound.wav',
-            'Water_Strider': './Sons/Exotiques/Water_Strider.wav',
-            'Whiptail': './Sons/Exotiques/Whiptail.wav',
-            'Worm': './Sons/Exotiques/Worm.wav'
-        }
-    };
-    const cardAudio = new WeakMap();    
+    const calineAudio = new WeakMap();  
 
     // Noms d'extensions
     const expansionNames = {
@@ -390,39 +371,30 @@ applyFilters();
         return expansionCaptionFallback(expansion);
     }
 
-    function getBaseName(src) {
-        try {
-            const parts = src.split('/');
-            const name = parts[parts.length-1];
-            return name.split('.').slice(0, -1).join('.') || name;
-        } catch (e) { return src; }
-    }
+    function playCalineSound(img) {
+        const src = img.getAttribute('src') || '';
+        if (src.split('/').pop() !== 'Caline.png') return;
 
-    function playCardSound(img) {
-        if (img.dataset.rarity !== cardSoundConfig.rarity) return;
-
-        const cardName = getBaseName(img.getAttribute('src') || img.src);
-        const soundSrc = cardSoundConfig.soundsByCard[cardName];
-        if (!soundSrc) return;
-
-        let audio = cardAudio.get(img);
+        let audio = calineAudio.get(img);
         if (!audio) {
-            audio = new Audio(soundSrc);
-            cardAudio.set(img, audio);
+            audio = new Audio('./Sons/Caline.wav');
+            calineAudio.set(img, audio);
         }
 
         audio.currentTime = 0;
         const playPromise = audio.play();
         if (playPromise && typeof playPromise.catch === 'function') {
             playPromise.catch(error => {
-                console.warn('La lecture du son de la carte a échoué.', error);
+                console.warn('La lecture du son de Caline a échoué.', error);
             });
         }
     }
 
-    function stopCardSound(img) {
-        const audio = cardAudio.get(img);
-        if (audio) audio.pause();
+    function stopCalineSound(img) {
+        const audio = calineAudio.get(img);
+        if (!audio) return;
+        audio.pause();
+        audio.currentTime = 0;
     }
 
     function getExtensionForImage(img) {
@@ -470,7 +442,7 @@ applyFilters();
 
     function resetZoom(){
         if (!current) return;
-        stopCardSound(current.img);       
+        stopCalineSound(current.img);    
         try { current.overlay.parentElement.removeChild(current.overlay); } catch(e){}
         current = null;
     }
@@ -503,8 +475,8 @@ applyFilters();
         root.querySelectorAll('.catalogue-card').forEach(img => {
             if (img.__zoomBound) return;
             img.__zoomBound = true;
-            img.addEventListener('click', (e) => {
-                playCardSound(img);
+            img.addEventListener('click', (e) => {  
+                playCalineSound(img);
                 if (current) { resetZoom(); return; }
                 openZoom(img);
             });
