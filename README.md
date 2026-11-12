@@ -1,4 +1,4 @@
-*A huge and heartfelt thank you to all the hunters who take the time to embark on this adventure!*
+« A huge and heartfelt thank you to all the hunters who take the time to embark on this adventure ! »
 
 ### JOURNEY DONE
 <ins>February 22th 2026 :</ins> (English) Release of the game<br>
@@ -6,3 +6,7 @@
 <ins>April 19th 2026 :</ins> Release of the "Dire Diets" major expansion<br>
 <ins>May 17th 2026 :</ins> Release of the "Dragonflight" minor expansion<br>
 <ins>October 11th 2026 :</ins> Release of the "Hunting Heroes" major expansion<br>
+<ins>November 15th 2026 :</ins> Release of the "The War Within" minor expansion<br>
+
+*Will you be able to find the secret hidden within the Trueshot Lodge ?<br>*
+*<ins>Hint :</ins> You must wait ...*
