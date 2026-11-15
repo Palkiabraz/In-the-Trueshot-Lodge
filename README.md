@@ -8,5 +8,5 @@
 <ins>October 11th 2026 :</ins> Release of the "Hunting Heroes" major expansion<br>
 <ins>November 15th 2026 :</ins> Release of the "The War Within" minor expansion<br>
 
-*Will you be able to find the secret hidden within the Trueshot Lodge ?<br>*
+*Will you be able to find the secret hidden within the Trueshot Lodge ?* <br>
 *<ins>Hint :</ins> You must wait ...*
