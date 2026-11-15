@@ -223,7 +223,6 @@ body {
 
 .menu .dropdown li a:hover {
     background: transparent;
-    font-weight: bold;
 }
 
 .menu .dropdown.open {
